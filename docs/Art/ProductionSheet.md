@@ -17,13 +17,14 @@ Labels used in this sheet:
 | Units | Blender scene Unit System = Metric, Unit Scale = 1.0, so 1 Blender unit = 1 m. UE works in cm (1 UU = 1 cm); the FBX exporter converts. [SCOPE] |
 | Axes | +X forward, +Z up. Author every asset facing +X. [SCOPE] (see 1.1 for the export-axis caveat) |
 | Christian height | Exactly 175.26 cm (5'9"), measured as soles-on-ground to the top of the head mesh in the Blender rest pose (1.7526 m). [SCOPE] |
-| Texel density, hero | 10.24 px/cm (4096 px spans 400 cm). Characters, hero props, ROV, and any close-inspection prop. [SCOPE] |
-| Texel density, environment | 5.12 px/cm (4096 px spans 800 cm). Lab 04 and RiverWalk kit pieces. [SCOPE] |
+| Texel density, hero | 10.24 px/cm (4096 px spans 400 cm). [SCOPE for the value] Which assets belong to the hero set (Christian, ROV, hatch, gauge panel, scrubber, umbilical coil, lamp post, fuel pump, canopy, and any close-inspection prop) is [PROPOSED]; scope.md says only "10.24 px/cm hero, 5.12 px/cm environment". The Density column in every module table below is therefore [PROPOSED] except where it simply restates the 5.12 environment default. |
+| Texel density, environment | 5.12 px/cm (4096 px spans 800 cm). [SCOPE for the value] Lab 04 and RiverWalk kit pieces by default; membership is [PROPOSED]. |
 | Texture size | 4K (4096 x 4096) texture sets. [SCOPE] |
 | Packed ORM | `T_<Name>_ORM`: R = ambient occlusion, G = roughness, B = metallic. Imported with sRGB off, compression "Masks (no sRGB)". [SCOPE] |
 | Normal map | DirectX convention (-Y green). Imported with compression "Normalmap", sRGB off. Do not tick "Flip Green Channel" on import if the bake already used DirectX. [SCOPE] |
 | Albedo | `T_<Name>_BC`: sRGB on, no baked lighting. [SCOPE] |
-| Tangent space | Bake and display with MikkTSpace. Blender's default bake and UE's default import both use it. [PROPOSED] |
+| Tangent space and normals | Bake with MikkTSpace. Hard-surface assets keep their Blender custom/weighted normals through import: UE Normal Import Method must be "Import Normals" (or "Import Normals and Tangents"), with tangents computed as MikkTSpace. [PROPOSED] |
+| Substrate prerequisite | Translucent glass, acrylic and water materials need Substrate enabled in the project (`r.Substrate=1`, requires an editor restart) before they can be built. Not currently set in `unreal/Config`; the orchestrator or engine owner enables it. This sheet does not edit Config. [VERIFY exact setting in 5.8 Project Settings > Rendering] |
 | Hard-surface method | Weighted normals plus bevel modifiers, trim-sheet UVs. Details baked from high poly to low poly. [SCOPE] |
 | Collision | Hand-authored `UCX_<MeshName>` convex hulls in Blender. [SCOPE] |
 
@@ -147,7 +148,7 @@ unreal/Content/
 
 Notes:
 - The 45k to 65k LOD0 range is the scope value. Whether hair cards, mask and watch count inside it is not stated in scope.md; this sheet counts them separately, so the "body" mesh must itself reach 45k to 65k. Raise with the orchestrator if a single combined figure is required.
-- Skeletal meshes use manual LODs LOD0 to LOD3 (authored or generated in Blender and imported as LOD groups, or generated with UE's reduction tools and then hand-checked at the face and hands). Nanite on skeletal meshes is not assumed; leave it off unless verified for the 5.8 skeletal pipeline. [VERIFY]
+- Skeletal meshes use manual LODs LOD0 to LOD3 (either each LOD exported as its own FBX, because Blender writes no FBX LOD groups, and imported with the UE Skeletal Mesh "Import LOD" workflow, or generated in UE with its reduction tools and then hand-checked at the face and hands). Nanite on skeletal meshes is not assumed; leave it off unless verified for the 5.8 skeletal pipeline. [VERIFY]
 - Quad-dominant topology; face loops follow the eye, mouth and nasolabial flow for the 52 shape keys; hands and elbows get three edge loops for deformation.
 
 ### 3.3 Texturing (hero density)
@@ -229,6 +230,7 @@ Additional names present in the `SK_Mannequin` name table that this sheet does *
 
 **Rig construction rules [PROPOSED]:**
 - Build the Blender armature by copying Manny's bone names, hierarchy and roll from a one-time Manny FBX export (UE: right-click `SK_Mannequin` > Asset Actions > Export FBX; do not edit the source asset), then fit to Christian's proportions. Do not rename bones.
+- **Orientation rule (one rule):** the Manny FBX is a reference only and, when imported into Blender, will not face +X. Import it, then rotate the whole imported armature and mesh (not individual bones) about Z so it faces +X, and apply rotation and scale, before copying bones. Everything authored afterwards faces +X, exactly as section 3.1 states. The FBX export Forward/Up pair (checklist section 2) is what maps this +X authoring back onto the UE import, so the Manny-derived bone axes must come out identical to Manny's in the smoke test (checklist section 4); if they do not, change the export axis pair, never the authored facing.
 - Skin weights: 4 influences per vertex maximum on LOD0 in the exported FBX unless the project later enables 8-influence (verify project setting). [PROPOSED]
 - Export every bone, including non-deforming IK bones (so "Only Deform Bones" is **off**; see the checklist).
 
@@ -294,7 +296,7 @@ Notes:
 
 ### 4.1 Kit module list (Nanite opaque hull pieces unless noted)
 
-| Module | Description | Tris budget [PROPOSED] | Density | Notes |
+| Module | Description | Tris budget [PROPOSED] | Density [PROPOSED] | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | `SM_Lab04_Floor_Deck_4x4` | 4 m x 4 m deck plate | 2,000 | 5.12 | trim sheet plus tiling; floor drain variant `_Drain` |
 | `SM_Lab04_Wall_Panel_Straight` | flat riveted wall segment, 4 m | 4,000 to 8,000 | 5.12 | patch-plate and rivet variants via trim |
@@ -346,7 +348,7 @@ Budget philosophy: Nanite lets the hull stay dense, so budgets are about authori
 
 ### 5.1 Module list and budgets [PROPOSED]
 
-| Module | Description | Tris budget | Density |
+| Module | Description | Tris budget | Density [PROPOSED] |
 | :--- | :--- | :--- | :--- |
 | `SM_ROV_Scout_Body` | main yellow frame and shell | 15,000 to 25,000 | 10.24 |
 | `SM_ROV_Scout_Thruster` (x instances) | thruster with shroud; propeller separate for rotation | 2,000 to 4,000 each | 10.24 |
@@ -388,7 +390,7 @@ The umbilical itself is driven by `UCableComponent` in C++ (scope.md section 6);
 
 ### 6.1 Module list and budgets [PROPOSED]
 
-| Module | Description | Tris budget | Density |
+| Module | Description | Tris budget | Density [PROPOSED] |
 | :--- | :--- | :--- | :--- |
 | `SM_RW_Seawall_Straight` | concrete seawall and promenade curb, 4 m | 2,000 to 4,000 | 5.12 |
 | `SM_RW_Seawall_Corner` | corner piece | 2,500 to 5,000 | 5.12 |
@@ -431,10 +433,12 @@ Trim sheets for wood planks, timber with mussel growth, concrete, rusted iron, p
 
 | Material | Nanite | Material model |
 | :--- | :--- | :--- |
-| Opaque steel, concrete, wood, painted metal, fuel pump, ROV shell | **Yes**, no manual LODs | standard opaque; Substrate if the project has it enabled project-wide |
+| Opaque steel, concrete, wood, painted metal, fuel pump, ROV shell | **Yes**, no manual LODs | standard opaque; Substrate if enabled project-wide (see the Substrate prerequisite in section 1) |
 | Acrylic dome, viewport glass, portholes, gauge lenses, windshields | **No** | translucent Substrate with custom refractive caustics |
 | Water (river surface) | **No** | translucent Substrate / SingleLayerWater |
 | Skeletal meshes (Christian) | not assumed; manual LOD0 to LOD3 | Subsurface Profile skin (8.2 reference); hair anisotropic |
+
+Translucent rows require the Substrate prerequisite from section 1.
 
 Rules:
 - Never put a translucent surface and an opaque surface on the same mesh element; separate glass into its own mesh or its own FBX so UE can disable Nanite per mesh.

@@ -36,7 +36,7 @@ Blender FBX option names below are those of the Blender 4.x exporter (File > Exp
 - [ ] Max 4 skin influences per vertex (LOD0) unless the project enables more. [PROPOSED]
 - [ ] Shape keys: Basis plus the 52 ARKit keys named exactly as in ProductionSheet section 3.6. [SCOPE]
 - [ ] Rest pose applied as bind pose; no animation baked in the mesh FBX.
-- [ ] LODs present as separate objects (`SK_Christian_LOD1`, `_LOD2`, `_LOD3`) if imported as authored LODs. [PROPOSED]
+- [ ] LODs: Blender cannot write FBX LOD groups. If LODs are authored, export one FBX per LOD (`CHR_Christian_01_LOD1.fbx` etc., same skeleton and bone names) and import each with the UE Skeletal Mesh "Import LOD" workflow after LOD0. Otherwise generate LODs in UE. [PROPOSED]
 
 ---
 
@@ -49,7 +49,7 @@ Blender FBX option names below are those of the Blender 4.x exporter (File > Exp
 
 ### Transform
 - [ ] **Scale = 1.0**, **Apply Scalings = FBX Units Scale**. With Blender scene units at 1 unit = 1 m, this writes centimetre units into the FBX so UE imports at the correct size (a 1.7526 m character becomes 175.26 UU). [SCOPE for the 1 unit = 1 m / 1 cm = 1 UU rule; verify result in the smoke test]
-- [ ] **Forward / Up:** set to the pair proven in the smoke test. Authoring convention is +X forward, +Z up. **Pair to use: [VERIFY]**. Record result here after the smoke test: Forward = ____ , Up = ____ . Do not leave Blender's default untested.
+- [ ] **Forward / Up:** set to the pair proven in the smoke test. Authoring convention is +X forward, +Z up. **Starting pair to try first: Forward = X, Up = Z** [PROPOSED starting value, not proven]. The smoke test (section 4) confirms or corrects it; record the final pair here: Forward = ____ , Up = ____ . Reconciling with the Manny reference armature: see ProductionSheet section 3.4 Orientation rule (rotate the imported Manny to face +X once; never change authored facing).
 - [ ] **Apply Unit** on (Blender label for the unit conversion; keep consistent with Apply Scalings above). [PROPOSED]
 - [ ] **Use Space Transform** on. [PROPOSED]
 - [ ] **Apply Transform** on. [SCOPE] (Blender marks this option experimental; if it breaks armature or animation orientation, tell the orchestrator rather than switching it off silently. The smoke test must include a skinned bone to catch this.)
@@ -59,7 +59,7 @@ Blender FBX option names below are those of the Blender 4.x exporter (File > Exp
 - [ ] Apply Modifiers on (bevel, weighted normal, mirror applied into the export). For skeletal meshes with shape keys, Blender cannot apply modifiers on a mesh that has shape keys without breaking them: apply or remove modifiers on those meshes first, then leave Apply Modifiers off. [PROPOSED]
 - [ ] Loose Edges off.
 - [ ] Triangulate Faces on (matches Blender and UE triangulation; do before baking normals, so bake and export triangulation agree). [PROPOSED]
-- [ ] Tangent Space off. UE recalculates MikkTSpace on import; baked maps used MikkTSpace. [PROPOSED]
+- [ ] Tangent Space off. Custom normals are exported; UE imports normals and computes MikkTSpace tangents; baked maps used MikkTSpace. [PROPOSED]
 - [ ] Vertex Colors: on for assets using vertex-paint masks, otherwise off.
 
 ### Armature
@@ -79,7 +79,9 @@ Blender FBX option names below are those of the Blender 4.x exporter (File > Exp
 
 ## 3. UE 5.8 import settings, per asset
 
-General for all: Import Uniform Scale 1.0. Material Import Method: "Do Not Create Material" (materials are made in UE; Substrate for translucent). Tangents: "Compute Normals/Tangents (MikkTSpace)" or "Import Normals and Tangents" if the Blender export carries tangents; this sheet uses computed MikkTSpace. [PROPOSED]
+- [ ] Prerequisite before any glass, acrylic or water material work: Substrate is enabled in the project (`r.Substrate=1`, editor restart required). Not set in `unreal/Config` at the time of writing; engine owner enables it, this document does not edit Config. [VERIFY]
+
+General for all: Import Uniform Scale 1.0. Material Import Method: "Do Not Create Material" (materials are made in UE; Substrate for translucent). Normal Import Method: **"Import Normals"** (or "Import Normals and Tangents"), so Blender custom/weighted normals survive; Tangents computed as MikkTSpace ("Compute Tangents"/MikkTSpace, exact label per UE 5.8 import dialog [VERIFY]). Do not use "Compute Normals" on hard-surface assets. [PROPOSED]
 
 ### 3.1 `CHR_Christian_01` (SK_Christian)
 
@@ -93,7 +95,7 @@ General for all: Import Uniform Scale 1.0. Material Import Method: "Do Not Creat
 | Use T0 as Ref Pose | on [PROPOSED] |
 | Preserve Smoothing Groups | on |
 | Build Nanite | off [PROPOSED; verify skeletal Nanite status in 5.8] |
-| Import Mesh LODs | on if LODs are authored in FBX, else off and use UE reduction |
+| LODs | import LOD0 FBX first, then each `_LODn.fbx` via Skeletal Mesh Import LOD; or off and use UE reduction |
 | Physics Asset | create new (`PHYS_Christian`) |
 | Vertex Color | Ignore, unless a skin-tone mask is used |
 | Material slots | named per Blender materials |
