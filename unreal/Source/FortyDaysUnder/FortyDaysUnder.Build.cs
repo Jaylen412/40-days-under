@@ -17,6 +17,8 @@ public class FortyDaysUnder : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"ApplicationCore",
+			"Slate",
+			"SlateCore",
 			"Json",
 			"JsonUtilities"
 		});
