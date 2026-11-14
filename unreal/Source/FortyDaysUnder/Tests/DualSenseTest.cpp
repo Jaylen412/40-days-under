@@ -2,6 +2,7 @@
 #include "UObject/Package.h"
 #include "Input/DualSenseFeedbackProfile.h"
 #include "Input/DualSenseFeedbackComponent.h"
+#include "Input/DualSenseDeviceRouting.h"
 #include "Simulation/VitalsSnapshot.h"
 
 #if WITH_DEV_AUTOMATION_TESTS
@@ -192,6 +193,38 @@ bool FDualSenseDeviceUnitScalingTest::RunTest(const FString& Parameters)
 	}
 	return true;
 #endif
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FDualSenseDeviceSelectionTest, "FortyDaysUnder.Input.DeviceSelection", FortyDaysUnderDualSenseTest::Flags)
+bool FDualSenseDeviceSelectionTest::RunTest(const FString& Parameters)
+{
+	const FInputDeviceId KeyboardId = FInputDeviceId::CreateFromInternalId(91);
+	const FInputDeviceId XboxId = FInputDeviceId::CreateFromInternalId(92);
+	const FInputDeviceId PadId = FInputDeviceId::CreateFromInternalId(93);
+	TArray<FDualSenseDeviceCandidate> Devices = {
+		{KeyboardId, FName("Keyboard"), true},
+		{XboxId, FName("Xbox Wireless Controller"), true},
+		{PadId, FName("PS5 Wireless Controller"), false}
+	};
+	FInputDeviceId RemappedId = INPUTDEVICEID_NONE;
+	auto Remap = [&RemappedId](FInputDeviceId DeviceId, int32& ControllerId)
+	{
+		RemappedId = DeviceId;
+		ControllerId = 7;
+		return true;
+	};
+	TestFalse(TEXT("Keyboard, Xbox and disconnected DualSense rejected"), ResolveDualSenseDevice(Devices, Remap).IsValid());
+	TestTrue(TEXT("Unsupported devices never remapped"), RemappedId == INPUTDEVICEID_NONE);
+	Devices[2].bConnected = true;
+	const FDualSenseDeviceRoute Route = ResolveDualSenseDevice(Devices, Remap);
+	TestTrue(TEXT("Connected pad accepted alongside keyboard and Xbox"), Route.IsValid());
+	TestTrue(TEXT("Exact selected pad ID passed to mapper"), RemappedId == PadId && Route.DeviceId == PadId);
+	TestEqual(TEXT("Selected controller route retained"), Route.ControllerId, 7);
+	Devices.Swap(0, 2);
+	TestTrue(TEXT("Keyboard order cannot suppress connected pad"), ResolveDualSenseDevice(Devices, Remap).DeviceId == PadId);
+	TestFalse(TEXT("Failed remap rejected"), ResolveDualSenseDevice(Devices, [](FInputDeviceId, int32&) { return false; }).IsValid());
+	TestFalse(TEXT("Invalid controller route rejected"), ResolveDualSenseDevice(Devices, [](FInputDeviceId, int32&) { return true; }).IsValid());
+	return true;
 }
 
 #endif

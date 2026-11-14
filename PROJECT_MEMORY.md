@@ -2,7 +2,7 @@ project: "40 Days Under"
 engine: "Unreal Engine 5.8 (C++20)"
 dcc_tool: "Blender 4.x"
 mcp_servers: ["higgsfield", "filesystem"]
-last_updated_by: "Claude Fable 5.2 — Orchestrator"
+last_updated_by: "Codex — Orchestrator"
 timestamp: "2026-11-14T18:06:25Z"
 
 # PROJECT_MEMORY.md — Single Source of Truth
@@ -30,6 +30,14 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
 - `[ACTIVE]` **DEC-006:** Diesel tank 2000 L, burn 2 L/h: full tank runs dry on day 41.7, sputters below 15% from day 35.
 - `[ACTIVE]` **DEC-007:** All survival math lives in plain C++ structs (`FBuhlmannModel`, `FAirSupplyModel`, `FBodyModel`); other systems read only `FVitalsSnapshot`.
 
+### Implemented module registry
+
+- `[ACTIVE]` `FBuhlmannModel`, `FAirSupplyModel`, `FBodyModel`: nitrogen tissues, diesel/air chemistry, body reserves and isolation.
+- `[ACTIVE]` `FVitalsSnapshot`: Blueprint-readable contract for consumers.
+- `[ACTIVE]` `USurvivalClockSubsystem`, `USurvivalVitalsComponent`: fixed-minute clock, model ownership, decompression cycle and death notification.
+- `[ACTIVE]` `AUnderwaterCharacter`, `UUnderwaterMovementComponent`, `AFortyDaysGameMode`: dry-lab walking, submerged movement/current/buoyancy, camera selection, survival-driven movement and input latency.
+- `[ACTIVE]` `FDualSenseFeedbackProfile`, `UDualSenseFeedbackComponent`: trigger/lightbar/pump feedback; device-gating review pending. `SonyPadHooks.h` is a stub.
+
 ## 3. Blender-to-UE5 Asset Pipeline Status
 
 | Asset ID | Asset Name | Higgsfield Ref | Blender `.blend` | `.fbx` Exported | UE5 Imported | Status |
@@ -41,6 +49,7 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
 
 ## 4. Sub-Agent Handoff Queue (Pick Up Here Next)
 
-- **Completed This Session:** design and plan written; all five reference plates located and logged.
-- **Active Blockers / Open Questions:** none yet.
-- **Immediate Next Step for Incoming Model:** execute the plan from Task 1; progress ledger is in `.superpowers/sdd/2026-11-14-first-pass/progress.md` (git-ignored).
+- **Verified prior work:** Tasks 0, 1, 2, 5 and 6 are committed on `first-pass`. The former instruction to start Task 1 was stale. Survival models/clock/vitals, underwater movement/character/game mode, narrative documents/data and art production documents exist. Task 3 feedback implementation is at `c2df65b`, with its final device-support review still open.
+- **In progress:** Task 4 Act 2 state machine and opening-slice director; Task 3 device gating review. Only the Task 4 implementer may run Unreal build/tests until it releases the build slot.
+- **Known limitations:** no authored Lab 04 level or Blender assets; no authored haptic WAVs; Sony controller-speaker hooks require PS5 SDK; real controller feel has not been verified.
+- **Next:** finish Task 4 and resolve Task 3 review, then Task 7 clean build/full automation suite and final memory update. Detailed prior ledger: `.superpowers/sdd/2026-11-14-first-pass/progress.md` (git-ignored).

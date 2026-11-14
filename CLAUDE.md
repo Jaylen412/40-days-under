@@ -11,10 +11,12 @@ Requirements live in `scope.md`. The Unreal project lives in `unreal/`.
 ```sh
 UE="/Users/Shared/Epic Games/UE_5.8"
 "$UE/Engine/Build/BatchFiles/Mac/Build.sh" FortyDaysUnderEditor Mac Development -project="$PWD/unreal/FortyDaysUnder.uproject"
-"$UE/Engine/Binaries/Mac/UnrealEditor-Cmd" "$PWD/unreal/FortyDaysUnder.uproject" -ExecCmds="Automation RunTests FortyDaysUnder; Quit" -unattended -nullrhi -nosplash -nosound -stdout
+"$UE/Engine/Binaries/Mac/UnrealEditor-Cmd" "$PWD/unreal/FortyDaysUnder.uproject" '-ini:Engine:[ConsoleVariables]:HomeScreen.EnableHomeScreen=0' -ExecCmds="Automation RunTests FortyDaysUnder; Quit" -unattended -nullrhi -nosplash -nosound -stdout
 ```
 
 Only one build or test run at a time; UnrealBuildTool refuses concurrent runs.
+The launch-only home-screen override avoids UE 5.8 scanning recent projects before headless tests.
+Verify every `FortyDaysUnder.*` test logs `Result={Success}` with no `Result={Fail}`; process exit alone is insufficient.
 
 ## Rules
 

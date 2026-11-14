@@ -1,4 +1,8 @@
 #include "Input/DualSenseFeedbackComponent.h"
+#include "Input/DualSenseDeviceRouting.h"
+#include "GenericPlatform/InputDeviceRegistry.h"
+#include "Engine/GameInstance.h"
+#include "GameMapsSettings.h"
 #include "Survival/SurvivalVitalsComponent.h"
 #include "Engine/World.h"
 #include "Engine/LocalPlayer.h"
@@ -12,27 +16,45 @@
 
 namespace
 {
-	/**
-	 * Sends a raw device property to the pad. This is the same path UInputDeviceProperty uses
-	 * internally; the UObject property classes keep their data protected or in curve assets,
-	 * which does not suit values computed every frame.
-	 */
-	void SendDeviceProperty(const APlayerController* Controller, const FInputDeviceProperty& Property)
+	FDualSenseDeviceRoute ResolveDevice(const APlayerController* Controller)
 	{
 		const ULocalPlayer* LocalPlayer = Controller ? Controller->GetLocalPlayer() : nullptr;
-		if (!LocalPlayer || !FSlateApplication::IsInitialized())
+		if (!LocalPlayer || !FSlateApplication::IsInitialized() || !FSlateApplication::Get().GetInputInterface())
 		{
-			return;
+			return {};
 		}
-		IInputInterface* InputInterface = FSlateApplication::Get().GetInputInterface();
-		if (!InputInterface)
+		IPlatformInputDeviceMapper& Mapper = IPlatformInputDeviceMapper::Get();
+		const FPlatformUserId UserId = LocalPlayer->GetPlatformUserId();
+		TArray<FInputDeviceId> DeviceIds;
+		Mapper.GetAllInputDevicesForUser(UserId, DeviceIds);
+		TArray<FDualSenseDeviceCandidate> Candidates;
+		for (FInputDeviceId DeviceId : DeviceIds)
 		{
-			return;
+			const TOptional<FInputDeviceDescriptor> Descriptor = FInputDeviceRegistry::FindDescriptor(DeviceId);
+			if (Descriptor.IsSet())
+			{
+				Candidates.Add({DeviceId, Descriptor->InputDeviceName,
+					Mapper.GetInputDeviceConnectionState(DeviceId) == EInputDeviceConnectionState::Connected});
+			}
 		}
-		int32 ControllerId = INDEX_NONE;
-		IPlatformInputDeviceMapper::Get().RemapUserAndDeviceToControllerId(LocalPlayer->GetPlatformUserId(), ControllerId);
-		InputInterface->SetDeviceProperty(ControllerId, &Property);
+		return ResolveDualSenseDevice(Candidates, [&Mapper, UserId](FInputDeviceId DeviceId, int32& ControllerId)
+		{
+			return Mapper.RemapUserAndDeviceToControllerId(UserId, ControllerId, DeviceId);
+		});
 	}
+
+	// Same raw property path as UInputDeviceProperty; retain the validated device's route.
+	void SendDeviceProperty(const FDualSenseDeviceRoute& Route, const FInputDeviceProperty& Property)
+	{
+		if (Route.IsValid() && FSlateApplication::IsInitialized())
+		{
+			if (IInputInterface* InputInterface = FSlateApplication::Get().GetInputInterface())
+			{
+				InputInterface->SetDeviceProperty(Route.ControllerId, &Property);
+			}
+		}
+	}
+
 }
 
 UDualSenseFeedbackComponent::UDualSenseFeedbackComponent()
@@ -49,7 +71,7 @@ bool UDualSenseFeedbackComponent::HasSupportedDevice() const
 	{
 		return false;
 	}
-	return World->GetFirstPlayerController() != nullptr && World->GetFirstPlayerController()->IsLocalPlayerController();
+	return ResolveDevice(World->GetFirstPlayerController()).IsValid();
 }
 
 void UDualSenseFeedbackComponent::BeginPlay()
@@ -72,11 +94,12 @@ void UDualSenseFeedbackComponent::EndPlay(const EEndPlayReason::Type EndPlayReas
 	// Leave the pad as we found it: no stuck resistance, vibration or lightbar colour.
 	if (HasSupportedDevice())
 	{
-		const APlayerController* Controller = GetWorld()->GetFirstPlayerController();
-		SendDeviceProperty(Controller, FInputDeviceTriggerResetProperty());
-		SendDeviceProperty(Controller, FInputDeviceLightColorProperty(false, FColor::Black));
+		const FDualSenseDeviceRoute Route = ResolveDevice(GetWorld()->GetFirstPlayerController());
+		SendDeviceProperty(Route, FInputDeviceTriggerResetProperty());
+		SendDeviceProperty(Route, FInputDeviceLightColorProperty(false, FColor::Black));
 	}
 	bLightbarSent = false;
+	StopPumpHaptic();
 
 	if (USurvivalVitalsComponent* Vitals = BoundVitals.Get())
 	{
@@ -124,6 +147,8 @@ void UDualSenseFeedbackComponent::TickComponent(float DeltaTime, ELevelTick Tick
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	if (!HasSupportedDevice())
 	{
+		StopPumpHaptic();
+		bLightbarSent = false;
 		return;
 	}
 	ApplyLightbar(FPlatformTime::Seconds());
@@ -134,7 +159,8 @@ void UDualSenseFeedbackComponent::ApplyTrigger()
 {
 	const UWorld* World = GetWorld();
 	const APlayerController* Controller = World ? World->GetFirstPlayerController() : nullptr;
-	if (!Controller)
+	const FDualSenseDeviceRoute Route = ResolveDevice(Controller);
+	if (!Route.IsValid())
 	{
 		return;
 	}
@@ -152,7 +178,7 @@ void UDualSenseFeedbackComponent::ApplyTrigger()
 		Vibration.TriggerPosition = Feedback.StartPosition;
 		Vibration.VibrationFrequency = Feedback.VibrationFrequencyHz;
 		Vibration.VibrationAmplitude = Feedback.VibrationAmplitude;
-		SendDeviceProperty(Controller, Vibration);
+		SendDeviceProperty(Route, Vibration);
 		break;
 	}
 	case ETriggerSendKind::Resistance:
@@ -163,12 +189,12 @@ void UDualSenseFeedbackComponent::ApplyTrigger()
 		Resistance.EndPosition = Feedback.EndPosition;
 		Resistance.StartStrengh = Feedback.StartStrength;
 		Resistance.EndStrengh = Feedback.EndStrength;
-		SendDeviceProperty(Controller, Resistance);
+		SendDeviceProperty(Route, Resistance);
 		break;
 	}
 	case ETriggerSendKind::Reset:
 	default:
-		SendDeviceProperty(Controller, FInputDeviceTriggerResetProperty());
+		SendDeviceProperty(Route, FInputDeviceTriggerResetProperty());
 		break;
 	}
 }
@@ -177,7 +203,8 @@ void UDualSenseFeedbackComponent::ApplyLightbar(double RealTimeSeconds)
 {
 	const UWorld* World = GetWorld();
 	const APlayerController* Controller = World ? World->GetFirstPlayerController() : nullptr;
-	if (!Controller)
+	const FDualSenseDeviceRoute Route = ResolveDevice(Controller);
+	if (!Route.IsValid())
 	{
 		return;
 	}
@@ -189,7 +216,7 @@ void UDualSenseFeedbackComponent::ApplyLightbar(double RealTimeSeconds)
 	}
 	bLightbarSent = true;
 	LastLightbar = Color;
-	SendDeviceProperty(Controller, FInputDeviceLightColorProperty(true, Color));
+	SendDeviceProperty(Route, FInputDeviceLightColorProperty(true, Color));
 }
 
 void UDualSenseFeedbackComponent::UpdatePumpHaptic(float DeltaTime)
@@ -197,7 +224,7 @@ void UDualSenseFeedbackComponent::UpdatePumpHaptic(float DeltaTime)
 	const FPumpHaptic Haptic = FDualSenseFeedbackProfile::PumpHaptic(Snapshot);
 	if (Haptic.Amplitude <= 0.0f || Haptic.PulseHz <= 0.0f)
 	{
-		PumpPhase = 0.0f;
+		StopPumpHaptic();
 		return;
 	}
 
@@ -212,8 +239,31 @@ void UDualSenseFeedbackComponent::UpdatePumpHaptic(float DeltaTime)
 
 	const UWorld* World = GetWorld();
 	APlayerController* Controller = World ? World->GetFirstPlayerController() : nullptr;
-	if (Controller && PumpThumpEffect)
+	const FDualSenseDeviceRoute Route = ResolveDevice(Controller);
+	// PlayerController haptics use a legacy index, with the viewport multiplayer offset.
+	int32 HapticIndex = Controller ? Controller->GetInputIndex() : INDEX_NONE;
+	if (World && World->GetGameInstance() && World->GetGameInstance()->GetNumLocalPlayers() > 1
+		&& GetDefault<UGameMapsSettings>()->bOffsetPlayerGamepadIds)
+	{
+		--HapticIndex;
+	}
+	if (Route.IsValid() && Route.ControllerId == HapticIndex && PumpThumpEffect)
 	{
 		Controller->PlayHapticEffect(PumpThumpEffect, EControllerHand::Left, Haptic.Amplitude, false);
+		PumpHapticController = Controller;
 	}
+	else
+	{
+		StopPumpHaptic();
+	}
+}
+
+void UDualSenseFeedbackComponent::StopPumpHaptic()
+{
+	if (APlayerController* Controller = PumpHapticController.Get())
+	{
+		Controller->StopHapticEffect(EControllerHand::Left);
+	}
+	PumpHapticController.Reset();
+	PumpPhase = 0.0f;
 }

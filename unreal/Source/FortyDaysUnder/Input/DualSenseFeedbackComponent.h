@@ -6,6 +6,7 @@
 #include "Simulation/VitalsSnapshot.h"
 #include "DualSenseFeedbackComponent.generated.h"
 
+class APlayerController;
 class UHapticFeedbackEffect_Base;
 class USurvivalVitalsComponent;
 
@@ -30,13 +31,7 @@ public:
 	/** Played on the left grip in time with the pump heartbeat. Asset assigned later. */
 	UPROPERTY(EditAnywhere) TObjectPtr<UHapticFeedbackEffect_Base> PumpThumpEffect;
 
-	/**
-	 * True when there is an owner, a world, a local player controller and the input device
-	 * subsystem. It does NOT check that the pad is a DualSense: any local player qualifies,
-	 * including keyboard or Xbox in PIE. Sending trigger or lightbar properties to a device
-	 * that does not support them is a no-op in the engine's base IInputInterface.
-	 * When false, every public method returns without doing anything.
-	 */
+	/** True only for a connected, identified DualSense with a valid local-user route. */
 	bool HasSupportedDevice() const;
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -49,6 +44,7 @@ private:
 	void ApplyTrigger();
 	void ApplyLightbar(double RealTimeSeconds);
 	void UpdatePumpHaptic(float DeltaTime);
+	void StopPumpHaptic();
 
 	FVitalsSnapshot Snapshot;
 	ETriggerAction Action = ETriggerAction::None;
@@ -60,4 +56,5 @@ private:
 	bool bLightbarSent = false;
 
 	TWeakObjectPtr<USurvivalVitalsComponent> BoundVitals;
+	TWeakObjectPtr<APlayerController> PumpHapticController;
 };
