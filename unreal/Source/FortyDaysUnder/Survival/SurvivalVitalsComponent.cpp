@@ -6,7 +6,7 @@
 namespace
 {
 	constexpr double SecondsPerHour = 3600.0;
-	constexpr double SecondsPerDay = 86400.0;
+	constexpr double VitalsSecondsPerDay = 86400.0;
 	constexpr double DecoCycleSeconds = FBuhlmannModel::DecoCycleHours * SecondsPerHour;
 }
 
@@ -156,7 +156,7 @@ void USurvivalVitalsComponent::SubStep(double Seconds)
 void USurvivalVitalsComponent::RefreshSnapshot()
 {
 	Snapshot.GameSeconds = GameSeconds;
-	Snapshot.Day = 1 + FMath::FloorToInt32(GameSeconds / SecondsPerDay);
+	Snapshot.Day = 1 + FMath::FloorToInt32(GameSeconds / VitalsSecondsPerDay);
 	Snapshot.FuelFraction = Air.FuelFraction();
 	Snapshot.bPumpRunning = Air.IsPumpRunning();
 	Snapshot.bPumpSputtering = Air.IsSputtering();

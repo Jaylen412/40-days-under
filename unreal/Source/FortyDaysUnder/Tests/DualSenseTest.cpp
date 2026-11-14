@@ -10,8 +10,8 @@ namespace FortyDaysUnderDualSenseTest
 {
 	constexpr EAutomationTestFlags Flags = EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter;
 
-	const FLinearColor Teal(0.0f, 0.5f, 0.5f);
-	const FLinearColor Amber(1.0f, 0.6f, 0.0f);
+	const FLinearColor ExpectedTeal(0.0f, 0.5f, 0.5f);
+	const FLinearColor ExpectedAmber(1.0f, 0.6f, 0.0f);
 
 	bool ColorNear(const FLinearColor& A, const FLinearColor& B, float Tol = 0.001f)
 	{
@@ -28,19 +28,19 @@ bool FDualSenseLightbarRampTest::RunTest(const FString& Parameters)
 	S.CeilingBar = 1.622;
 	S.AmbientBar = 2.484;
 	S.FuelFraction = 1.0;
-	TestTrue(TEXT("Saturated in the lab with full fuel is teal"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(S, 0.f, 0.0), Teal));
+	TestTrue(TEXT("Saturated in the lab with full fuel is teal"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(S, 0.f, 0.0), ExpectedTeal));
 
 	S.FuelFraction = 0.075;
-	TestTrue(TEXT("Fuel 0.075 is halfway teal/amber"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(S, 0.f, 0.0), FMath::Lerp(Teal, Amber, 0.5f)));
+	TestTrue(TEXT("Fuel 0.075 is halfway teal/amber"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(S, 0.f, 0.0), FMath::Lerp(ExpectedTeal, ExpectedAmber, 0.5f)));
 
 	S.FuelFraction = 0.0;
-	TestTrue(TEXT("Fuel 0 is amber"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(S, 0.f, 0.0), Amber));
+	TestTrue(TEXT("Fuel 0 is amber"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(S, 0.f, 0.0), ExpectedAmber));
 
 	FVitalsSnapshot N;
 	N.CeilingBar = 1.35;
 	N.AmbientBar = 1.5;
 	N.FuelFraction = 1.0;
-	TestTrue(TEXT("Ceiling 0.15 bar under ambient is halfway teal/amber"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(N, 0.f, 0.0), FMath::Lerp(Teal, Amber, 0.5f)));
+	TestTrue(TEXT("Ceiling 0.15 bar under ambient is halfway teal/amber"), ColorNear(FDualSenseFeedbackProfile::LightbarColor(N, 0.f, 0.0), FMath::Lerp(ExpectedTeal, ExpectedAmber, 0.5f)));
 
 	FVitalsSnapshot H;
 	H.AirStage = EAirStage::Hypoxic;
@@ -57,7 +57,7 @@ bool FDualSenseLightbarRampTest::RunTest(const FString& Parameters)
 	const FLinearColor Horde = FDualSenseFeedbackProfile::LightbarColor(Saturated, 0.8f, 1.0 / 6.0);
 	TestTrue(TEXT("Horde proximity 0.8 is crimson family"), Horde.R > Horde.G && Horde.R > Horde.B);
 	const FLinearColor NotYet = FDualSenseFeedbackProfile::LightbarColor(Saturated, 0.69f, 1.0 / 6.0);
-	TestTrue(TEXT("Horde proximity 0.69 is not crimson"), ColorNear(NotYet, Teal));
+	TestTrue(TEXT("Horde proximity 0.69 is not crimson"), ColorNear(NotYet, ExpectedTeal));
 	return true;
 }
 
