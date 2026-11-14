@@ -1,9 +1,11 @@
 #include "Character/UnderwaterMovementComponent.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/PhysicsVolume.h"
 
 UUnderwaterMovementComponent::UUnderwaterMovementComponent()
 {
 	DefaultWaterMovementMode = MOVE_Swimming;
-	GravityScale = 0.0f;
+	Buoyancy = 1.0f;   // engine value: neutral. Our NetBuoyancy is separate (see header).
 	MaxSwimSpeed = BaseSwimSpeed;
 }
 
@@ -18,24 +20,75 @@ float UUnderwaterMovementComponent::GetEffectiveSwimSpeed(float Stamina, EAirSta
 	return Speed;
 }
 
+bool UUnderwaterMovementComponent::IsInWater() const
+{
+	if (bForceSubmerged)
+	{
+		return true;
+	}
+	if (!UpdatedComponent && !GetWorld())
+	{
+		return false;   // no world (CDO / tests): Super would dereference the default volume
+	}
+	return Super::IsInWater();
+}
+
+float UUnderwaterMovementComponent::ImmersionDepth() const
+{
+	return bForceSubmerged ? 1.0f : Super::ImmersionDepth();
+}
+
 void UUnderwaterMovementComponent::PhysSwimming(float DeltaTime, int32 Iterations)
 {
-	Super::PhysSwimming(DeltaTime, Iterations);
-
-	if (DeltaTime <= 0.0f || !UpdatedComponent)
+	// The engine's PhysSwimming checks GetPhysicsVolume()->bWaterVolume directly (to compute
+	// the velocity, and to drop to MOVE_Falling), which a forced-submerged character without a
+	// water volume would fail. So the swim step is reimplemented here. Together with the
+	// IsInWater/ImmersionDepth overrides this defeats every volume check the engine makes:
+	// SetDefaultMovementMode, SetPostLandedPhysics, StartFalling-style mode selection
+	// (IsInWater), ImmersionDepth (bWaterVolume), and PhysSwimming/Swim (bWaterVolume).
+	if (DeltaTime < MIN_TICK_TIME || !UpdatedComponent || !CharacterOwner)
 	{
 		return;
 	}
 
-	// Drift: the water current plus buoyancy (scaled by base swim speed) displace the body.
+	RestorePreAdditiveRootMotionVelocity();
+
+	// Ambient drift in cm/s: the water current plus buoyancy.
 	const FVector Drift = WaterCurrentCmPerSec + FVector(0.0f, 0.0f, NetBuoyancy * BaseSwimSpeed);
-	if (!Drift.IsNearlyZero())
+	const FVector OldLocation = UpdatedComponent->GetComponentLocation();
+
+	if (!HasAnimRootMotion() && !CurrentRootMotion.HasOverrideVelocity())
 	{
-		FHitResult Hit;
-		SafeMoveUpdatedComponent(Drift * DeltaTime, UpdatedComponent->GetComponentQuat(), true, Hit);
-		if (Hit.IsValidBlockingHit())
-		{
-			SlideAlongSurface(Drift * DeltaTime, 1.0f - Hit.Time, Hit.Normal, Hit, true);
-		}
+		// Velocity is ground-frame and includes Drift. Friction and acceleration act on the
+		// water-relative velocity, so strip the drift, integrate, and put it back. Everything
+		// here is a rate (cm/s) multiplied by DeltaTime, so it is frame-rate independent.
+		const float Friction = 0.5f * GetPhysicsVolume()->FluidFriction;
+		Velocity -= Drift;
+		CalcVelocity(DeltaTime, Friction, true, GetMaxBrakingDeceleration());
+		Velocity += Drift;
+	}
+
+	ApplyRootMotionToVelocity(DeltaTime);
+
+	const FVector Adjusted = Velocity * DeltaTime;
+	FHitResult Hit(1.0f);
+	SafeMoveUpdatedComponent(Adjusted, UpdatedComponent->GetComponentQuat(), true, Hit);
+	float MovedTime = DeltaTime;
+	if (Hit.Time < 1.0f)
+	{
+		HandleImpact(Hit, DeltaTime, Adjusted);
+		SlideAlongSurface(Adjusted, 1.0f - Hit.Time, Hit.Normal, Hit, true);
+	}
+
+	if (!HasAnimRootMotion() && !CurrentRootMotion.HasOverrideVelocity() && !bJustTeleported)
+	{
+		Velocity = (UpdatedComponent->GetComponentLocation() - OldLocation) / MovedTime;
+	}
+
+	// Mirror the engine: swimming without water (and not forced) falls.
+	if (IsSwimming() && !IsInWater())
+	{
+		SetMovementMode(MOVE_Falling);
+		StartNewPhysics(0.0f, Iterations + 1);
 	}
 }

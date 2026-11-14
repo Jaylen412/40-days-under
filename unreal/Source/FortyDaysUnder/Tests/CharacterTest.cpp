@@ -58,4 +58,34 @@ bool FCharacterVignetteTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCharacterForceSubmergedTest, "FortyDaysUnder.Character.ForceSubmerged", FortyDaysUnderCharacterTest::Flags)
+bool FCharacterForceSubmergedTest::RunTest(const FString& Parameters)
+{
+	UUnderwaterMovementComponent* Move = NewObject<UUnderwaterMovementComponent>(GetTransientPackage());
+	Move->bForceSubmerged = true;
+	TestTrue(TEXT("Forced: in water with no volume"), Move->IsInWater());
+	TestEqual(TEXT("Forced: full immersion"), Move->ImmersionDepth(), 1.0f, 0.0001f);
+	Move->bForceSubmerged = false;
+	TestFalse(TEXT("Not forced: not in water without a volume"), Move->IsInWater());
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCharacterLabToggleTest, "FortyDaysUnder.Character.LabToggle", FortyDaysUnderCharacterTest::Flags)
+bool FCharacterLabToggleTest::RunTest(const FString& Parameters)
+{
+	AUnderwaterCharacter* Char = NewObject<AUnderwaterCharacter>(GetTransientPackage());
+	UUnderwaterMovementComponent* Move = Cast<UUnderwaterMovementComponent>(Char->GetCharacterMovement());
+	if (!TestNotNull(TEXT("Movement component"), Move))
+	{
+		return false;
+	}
+	Char->SetInsidePressurisedLab(false);
+	TestTrue(TEXT("Outside lab: forced submerged"), Move->bForceSubmerged);
+	TestFalse(TEXT("Outside lab: flag"), Char->bInsidePressurisedLab);
+	Char->SetInsidePressurisedLab(true);
+	TestFalse(TEXT("Inside lab: not forced"), Move->bForceSubmerged);
+	TestTrue(TEXT("Inside lab: flag"), Char->bInsidePressurisedLab);
+	return true;
+}
+
 #endif

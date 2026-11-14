@@ -43,9 +43,22 @@ void AUnderwaterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetCharacterMovement()->SetMovementMode(MOVE_Swimming);
+	SetInsidePressurisedLab(bInsidePressurisedLab);
 	SetCameraBlend(CameraBlend);
-	if (bInsidePressurisedLab)
+}
+
+void AUnderwaterCharacter::SetInsidePressurisedLab(bool bInside)
+{
+	bInsidePressurisedLab = bInside;
+	if (UUnderwaterMovementComponent* Move = Cast<UUnderwaterMovementComponent>(GetCharacterMovement()))
+	{
+		Move->bForceSubmerged = !bInside;
+		if (GetWorld())
+		{
+			Move->SetMovementMode(bInside ? MOVE_Walking : MOVE_Swimming);
+		}
+	}
+	if (bInside)
 	{
 		Vitals->SetDepthMetres(LabDepthMetres);
 	}

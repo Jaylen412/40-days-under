@@ -33,6 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable) float GetInputLatencySeconds() const; // 0.25 x DcsSeverity
 	UFUNCTION(BlueprintCallable) float GetAudioLowPassHz() const;      // lerp(20000, 800, DcsSeverity)
 	UFUNCTION(BlueprintCallable) float GetHypoxiaVignette() const;     // 0 Nominal, 0.3 Impaired, 0.6 Hypoxic, 1 Critical/Dead
+	/** Inside the lab the character walks; outside it swims (forced submerged, no water volume needed). */
+	UFUNCTION(BlueprintCallable) void SetInsidePressurisedLab(bool bInside);
 	UFUNCTION(BlueprintCallable) double GetDepthMetres() const;        // (WaterSurfaceZ - ActorZ)/100, min 0
 
 	UPROPERTY(EditAnywhere) double WaterSurfaceZ = 0.0;
