@@ -13,7 +13,7 @@ Days 1-20. Maintenance, scouting, quiet. Christian logs each night. Transition: 
 
 ## DistressIntercepted (day 40)
 - The hydrophone/radio array picks up a weak broadcast. Distress text, read by a woman's voice through static:
-  "This is the trawler Marguerite Anne, forty feet, two kilometers upriver of the Ambassador Bridge. Family of four aboard. We have diesel, full tanks. We can't stay here. If anyone can hear this, please answer. Repeat, family of four, full tanks, please answer."
+  "This is the trawler Marguerite Anne, forty feet, two kilometers upriver of Lab 04, toward Belle Isle. Family of four aboard. We have diesel, full tanks. We can't stay here. If anyone can hear this, please answer. Repeat, family of four, full tanks, please answer."
 - Christian, to the log: "Full tanks. They don't know we're here." Choice: A, broadcast the signal, or B, go alone.
 
 ## Branch A: Broadcast
