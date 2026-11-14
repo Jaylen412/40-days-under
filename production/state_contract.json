@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "clock": {"unit": "game_hour", "default_game_hours_per_wall_second": 0.016666666666666666, "opening_override": 0.0002777777777777778, "paused_ticks": false, "offline_ticks": false},
+  "habitat": {"depth_m": 15, "pressure_model": "ambient_pressure", "nominal_pressure_bar": 2.5, "decompression_game_hours": 17, "decompression_is_fictional": true, "surface_transfer": "sealed one-atmosphere capsule from lock to shallow launch point; return capsule docks before airlock repressurization"},
+  "fields": {
+    "elapsed_hours": "float >= 0; day = 1 + floor(elapsed_hours / 24)",
+    "phase": "BASE | CRISIS | SIGNAL_RENDEZVOUS | SIGNAL_DEFENSE | SOLO_PREP | SOLO_DECO | SOLO_OUTBOUND | SOLO_DOCK | SOLO_RETURN | RECOMPRESSION | END_SIGNAL_RESCUED | END_SIGNAL_ESCAPE | END_SWIM | DEAD",
+    "branch": "null | A | B; irreversible once selected",
+    "location": "HABITAT | AIRLOCK | RIVER | SURFACE | BOAT",
+    "diesel_l": "nonnegative liters",
+    "battery_kwh": "nonnegative kilowatt-hours",
+    "water_l": "nonnegative liters",
+    "meals": "nonnegative meal-equivalents",
+    "health": "0..100",
+    "stamina": "0..1",
+    "nitrogen_load": "0..1 fictional normalized exposure, not a dive computer",
+    "co2_stress": "0..1 fictional normalized symptom severity",
+    "hypoxia": "0..1 fictional normalized symptom severity",
+    "dcs_severity": "0..1 fictional symptom severity; motor latency, audio distortion, visor blur, rapid health loss; not medical modeling",
+    "isolation": "0..1; audiovisual presentation may be unreliable, authoritative values never are",
+    "deco_elapsed_hours": "0..17; advances only with reserved healthy life support",
+    "stealth_compromised": "bool, sticky after A commitment",
+    "terminal": "bool; terminal gameplay cannot resume",
+    "revision": "monotonic save transaction sequence"
+  },
+  "event_envelope": {"id": "string below", "game_hour": "number", "severity": "0..1", "direction": "-1..1 left-to-right cue only", "source": "authoritative | presentation", "payload": "object"},
+  "events": [
+    "pump.nominal", "pump.low_fuel", "pump.stopped", "air.co2_warning", "air.hypoxia_warning", "health.damage", "player.died", "stamina.low", "pressure.deco_started", "pressure.deco_progress", "pressure.deco_complete", "pressure.deco_interrupted", "pressure.unsafe_ascent", "pressure.recompression_complete", "current.drag", "hull.groan", "hull.breach", "speargun.load", "speargun.fire", "valve.turn", "radio.message", "watch.alarm", "breathing.cycle", "isolation.phantom_radio", "isolation.input_jitter", "horde.nearby", "repair.started", "repair.completed", "drone.deployed", "drone.returned", "choice.available", "choice.committed", "family.arrived", "defense.started", "defense.completed", "solo.departed", "solo.fuel_secured", "ending.reached"
+  ],
+  "presentation_policy": {"critical_truth": "Real life-support alarms override hallucinations and cosmetic cues.", "accessibility": "Allow independent haptic, trigger, speaker, light and jitter disable; duplicate all critical cues visually and via main audio.", "no_controller_gameplay_authority": true},
+  "save_policy": {"live_slots": 1, "death": "atomic live-to-tomb commit before presenting death", "tomb": "immutable run record; cannot resume", "offline_progress": false}
+}
