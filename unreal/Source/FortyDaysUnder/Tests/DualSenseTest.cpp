@@ -145,4 +145,53 @@ bool FDualSenseNoDeviceTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FDualSenseOnePropertyPerTriggerTest, "FortyDaysUnder.Input.OnePropertyPerTrigger", FortyDaysUnderDualSenseTest::Flags)
+bool FDualSenseOnePropertyPerTriggerTest::RunTest(const FString& Parameters)
+{
+	FTriggerFeedback F;
+	TestTrue(TEXT("All zero resets"), FDualSenseFeedbackProfile::SendKindFor(F) == ETriggerSendKind::Reset);
+	F.EndStrength = 2;
+	TestTrue(TEXT("Strength without vibration is resistance"), FDualSenseFeedbackProfile::SendKindFor(F) == ETriggerSendKind::Resistance);
+	F.bVibrate = true;
+	TestTrue(TEXT("Vibration wins"), FDualSenseFeedbackProfile::SendKindFor(F) == ETriggerSendKind::Vibration);
+	F.EndStrength = 0;
+	TestTrue(TEXT("Vibration without strength is vibration"), FDualSenseFeedbackProfile::SendKindFor(F) == ETriggerSendKind::Vibration);
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FDualSenseDeviceUnitScalingTest, "FortyDaysUnder.Input.DeviceUnitScaling", FortyDaysUnderDualSenseTest::Flags)
+bool FDualSenseDeviceUnitScalingTest::RunTest(const FString& Parameters)
+{
+#if defined(PLATFORM_PS5) && PLATFORM_PS5
+	return true; // pass-through on PS5; verify on hardware
+#else
+	FTriggerFeedback Max;
+	Max.StartPosition = Max.EndPosition = Max.StartStrength = Max.EndStrength = Max.VibrationAmplitude = 8;
+	Max.VibrationFrequencyHz = 12;
+	const FTriggerFeedback M = FDualSenseFeedbackProfile::ToDeviceUnits(Max);
+	TestEqual(TEXT("Position 8 -> 255"), M.StartPosition, 255);
+	TestEqual(TEXT("End position 8 -> 255"), M.EndPosition, 255);
+	TestEqual(TEXT("Strength 8 -> 255"), M.StartStrength, 255);
+	TestEqual(TEXT("End strength 8 -> 255"), M.EndStrength, 255);
+	TestEqual(TEXT("Amplitude 8 -> 255"), M.VibrationAmplitude, 255);
+	TestEqual(TEXT("Frequency 12 Hz -> 255"), M.VibrationFrequencyHz, 255);
+
+	const FTriggerFeedback Z = FDualSenseFeedbackProfile::ToDeviceUnits(FTriggerFeedback());
+	TestEqual(TEXT("Strength 0 -> 0"), Z.StartStrength, 0);
+	TestEqual(TEXT("Position 0 -> 0"), Z.StartPosition, 0);
+	TestEqual(TEXT("Amplitude 0 -> 0"), Z.VibrationAmplitude, 0);
+
+	int32 Previous = -1;
+	for (int32 V = 0; V <= 8; ++V)
+	{
+		FTriggerFeedback D;
+		D.StartStrength = V;
+		const int32 Scaled = FDualSenseFeedbackProfile::ToDeviceUnits(D).StartStrength;
+		TestTrue(*FString::Printf(TEXT("Monotonic at %d"), V), Scaled > Previous);
+		Previous = Scaled;
+	}
+	return true;
+#endif
+}
+
 #endif

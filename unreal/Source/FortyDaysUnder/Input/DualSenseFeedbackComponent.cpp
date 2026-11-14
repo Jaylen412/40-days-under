@@ -69,6 +69,15 @@ void UDualSenseFeedbackComponent::BeginPlay()
 
 void UDualSenseFeedbackComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	// Leave the pad as we found it: no stuck resistance, vibration or lightbar colour.
+	if (HasSupportedDevice())
+	{
+		const APlayerController* Controller = GetWorld()->GetFirstPlayerController();
+		SendDeviceProperty(Controller, FInputDeviceTriggerResetProperty());
+		SendDeviceProperty(Controller, FInputDeviceLightColorProperty(false, FColor::Black));
+	}
+	bLightbarSent = false;
+
 	if (USurvivalVitalsComponent* Vitals = BoundVitals.Get())
 	{
 		Vitals->OnVitalsChanged.RemoveDynamic(this, &UDualSenseFeedbackComponent::HandleVitalsChanged);
@@ -130,22 +139,38 @@ void UDualSenseFeedbackComponent::ApplyTrigger()
 		return;
 	}
 
-	const FTriggerFeedback Feedback = FDualSenseFeedbackProfile::TriggerFor(Action, Progress01, Snapshot);
+	const FTriggerFeedback Design = FDualSenseFeedbackProfile::TriggerFor(Action, Progress01, Snapshot);
+	const FTriggerFeedback Feedback = FDualSenseFeedbackProfile::ToDeviceUnits(Design);
 
-	FInputDeviceTriggerResistanceProperty Resistance;
-	Resistance.AffectedTriggers = EInputDeviceTriggerMask::Right;
-	Resistance.StartPosition = Feedback.StartPosition;
-	Resistance.EndPosition = Feedback.EndPosition;
-	Resistance.StartStrengh = Feedback.StartStrength;
-	Resistance.EndStrengh = Feedback.EndStrength;
-	SendDeviceProperty(Controller, Resistance);
-
-	FInputDeviceTriggerVibrationProperty Vibration;
-	Vibration.AffectedTriggers = EInputDeviceTriggerMask::Right;
-	Vibration.TriggerPosition = Feedback.bVibrate ? Feedback.StartPosition : 0;
-	Vibration.VibrationFrequency = Feedback.bVibrate ? Feedback.VibrationFrequencyHz : 0;
-	Vibration.VibrationAmplitude = Feedback.bVibrate ? Feedback.VibrationAmplitude : 0;
-	SendDeviceProperty(Controller, Vibration);
+	// A trigger holds one mode: each property replaces the last, so send exactly one.
+	switch (FDualSenseFeedbackProfile::SendKindFor(Design))
+	{
+	case ETriggerSendKind::Vibration:
+	{
+		FInputDeviceTriggerVibrationProperty Vibration;
+		Vibration.AffectedTriggers = EInputDeviceTriggerMask::Right;
+		Vibration.TriggerPosition = Feedback.StartPosition;
+		Vibration.VibrationFrequency = Feedback.VibrationFrequencyHz;
+		Vibration.VibrationAmplitude = Feedback.VibrationAmplitude;
+		SendDeviceProperty(Controller, Vibration);
+		break;
+	}
+	case ETriggerSendKind::Resistance:
+	{
+		FInputDeviceTriggerResistanceProperty Resistance;
+		Resistance.AffectedTriggers = EInputDeviceTriggerMask::Right;
+		Resistance.StartPosition = Feedback.StartPosition;
+		Resistance.EndPosition = Feedback.EndPosition;
+		Resistance.StartStrengh = Feedback.StartStrength;
+		Resistance.EndStrengh = Feedback.EndStrength;
+		SendDeviceProperty(Controller, Resistance);
+		break;
+	}
+	case ETriggerSendKind::Reset:
+	default:
+		SendDeviceProperty(Controller, FInputDeviceTriggerResetProperty());
+		break;
+	}
 }
 
 void UDualSenseFeedbackComponent::ApplyLightbar(double RealTimeSeconds)

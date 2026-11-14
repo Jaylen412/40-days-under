@@ -11,6 +11,11 @@ namespace
 	constexpr double PulseHz = 1.5;
 	constexpr double NitrogenWarningBandBar = 0.3;
 	constexpr int32 MaxStrength = 8;
+
+	// Device-unit scaling. Unverified on hardware: see FDualSenseFeedbackProfile::ToDeviceUnits.
+	constexpr float DeviceFullScale = 255.0f;
+	constexpr float DesignFullScale = 8.0f;
+	constexpr float DesignMaxFrequencyHz = 12.0f;
 }
 
 FLinearColor FDualSenseFeedbackProfile::LightbarColor(const FVitalsSnapshot& Snapshot, float HordeProximity01, double RealTimeSeconds)
@@ -98,4 +103,37 @@ FPumpHaptic FDualSenseFeedbackProfile::PumpHaptic(const FVitalsSnapshot& Snapsho
 		Out.Jitter = 0.0f;
 	}
 	return Out;
+}
+
+ETriggerSendKind FDualSenseFeedbackProfile::SendKindFor(const FTriggerFeedback& Feedback)
+{
+	if (Feedback.bVibrate)
+	{
+		return ETriggerSendKind::Vibration;
+	}
+	if (Feedback.StartStrength > 0 || Feedback.EndStrength > 0)
+	{
+		return ETriggerSendKind::Resistance;
+	}
+	return ETriggerSendKind::Reset;
+}
+
+FTriggerFeedback FDualSenseFeedbackProfile::ToDeviceUnits(const FTriggerFeedback& Design)
+{
+#if defined(PLATFORM_PS5) && PLATFORM_PS5
+	return Design;
+#else
+	auto Scale = [](int32 Value, float DesignMax)
+	{
+		return FMath::Clamp(FMath::RoundToInt(static_cast<float>(Value) * DeviceFullScale / DesignMax), 0, 255);
+	};
+	FTriggerFeedback Out = Design;
+	Out.StartPosition = Scale(Design.StartPosition, DesignFullScale);
+	Out.EndPosition = Scale(Design.EndPosition, DesignFullScale);
+	Out.StartStrength = Scale(Design.StartStrength, DesignFullScale);
+	Out.EndStrength = Scale(Design.EndStrength, DesignFullScale);
+	Out.VibrationAmplitude = Scale(Design.VibrationAmplitude, DesignFullScale);
+	Out.VibrationFrequencyHz = Scale(Design.VibrationFrequencyHz, DesignMaxFrequencyHz);
+	return Out;
+#endif
 }

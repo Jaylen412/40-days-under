@@ -10,7 +10,7 @@
  */
 namespace SonyPad
 {
-#if !PLATFORM_PS5
+#if !(defined(PLATFORM_PS5) && PLATFORM_PS5)
 	inline void PlaySpeakerCue(FName Cue) {}
 #else
 	void PlaySpeakerCue(FName Cue);

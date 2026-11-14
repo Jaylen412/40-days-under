@@ -41,3 +41,9 @@ Trigger positions and strengths are 0..8 on the right trigger. Lightbar colours 
 | `Hallucination` | Hypoxic whispers |
 
 The speaker cue column is the design intent. Nothing triggers cues yet; the hook exists so gameplay code can call it once the Sony SDK body is written.
+
+## Device units
+
+The profile works on a 0..8 design scale (positions, strengths, amplitude; frequency in Hz). `FDualSenseFeedbackProfile::ToDeviceUnits` is the only place that converts to what the platform expects. Under `PLATFORM_PS5` values pass through unchanged. On other platforms the engine's Apple DualSense path divides position, strength, amplitude and frequency by 255, so 8 maps to 255 and frequency is normalised against the 12 Hz maximum. Both conversions are unverified on hardware.
+
+A trigger holds one mode, so the component sends one property at a time: vibration when vibrating, resistance when any strength is non-zero, otherwise a trigger reset. On end play the triggers are reset and the lightbar is switched off.
