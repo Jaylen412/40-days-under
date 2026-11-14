@@ -1,0 +1,14 @@
+{
+  "beats": [
+    {"id": "wake_pump", "speaker": "Christian", "line": "That thump. Pump's still running. Okay. Still running.", "completeOnEvent": "WokeUp", "timeoutSeconds": 20},
+    {"id": "read_manifold", "speaker": "Christian", "line": "Manifold first. Pressure's holding, scrubber needle is in the green. Good. Boring is good.", "completeOnEvent": "GaugeRead", "timeoutSeconds": 35},
+    {"id": "check_watch", "speaker": "Christian", "line": "Watch says fifteen meters, and the nitrogen is climbing like it does every hour. Seventeen hours to decompress when I finally go up. Not today.", "completeOnEvent": "WatchChecked", "timeoutSeconds": 25},
+    {"id": "log_stock", "speaker": "LogRecorder", "line": "Day one log. Diesel tank, 2000 litres, burning 2 litres an hour. Desalinator makes 20 litres of water a day. Pantry count: 700 meals. Do the math later. Math is for later.", "completeOnEvent": "LogEntryStarted", "timeoutSeconds": 30},
+    {"id": "telemetry_fault", "speaker": "Station", "line": "Hydrophone array, channel three, no signal.", "completeOnEvent": "TelemetryFaultFlagged", "timeoutSeconds": 30},
+    {"id": "clear_fault", "speaker": "Christian", "line": "Channel three. I wrote this firmware. Of course it's channel three. Reseat the bus, clear the fault, don't take it personally.", "completeOnEvent": "TelemetryFaultCleared", "timeoutSeconds": 40},
+    {"id": "valve_stuck", "speaker": "Christian", "line": "Intake bulkhead valve is seized. Zebra mussels, probably. Manual crank, then.", "completeOnEvent": "ValveFound", "timeoutSeconds": 25},
+    {"id": "crank_valve", "speaker": "Christian", "line": "Come on. Come on. There. It's moving. Slow and steady, nobody's timing me.", "completeOnEvent": "ValveCranked", "timeoutSeconds": 45},
+    {"id": "dome_look", "speaker": "Christian", "line": "Okay. Look up. Just once. ...They're still up there. Hundreds of them, blocking the light. Not coming down. They can't come down.", "completeOnEvent": "DomeLookedUp", "timeoutSeconds": 30},
+    {"id": "log_close", "speaker": "LogRecorder", "line": "End of entry. Lab 04 is stable. Supply boat comes in three weeks. I just have to keep the lights on until then.", "completeOnEvent": "LogEntryClosed", "timeoutSeconds": 20}
+  ]
+}
