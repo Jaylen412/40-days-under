@@ -1,0 +1,380 @@
+{
+  "images": [
+    {
+      "index": 0,
+      "job_id": "5da449f1-5057-440d-9945-1778b68511bb",
+      "status": "completed",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022302_5da449f1-5057-440d-9945-1778b68511bb.png"
+    },
+    {
+      "index": 1,
+      "job_id": "a17a655d-fcc6-48ee-8f35-8b0e83b67435",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022411_a17a655d-fcc6-48ee-8f35-8b0e83b67435.png"
+    },
+    {
+      "index": 2,
+      "job_id": "eb1caebb-a85c-4808-b7de-b23e9c10a5e3",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022519_eb1caebb-a85c-4808-b7de-b23e9c10a5e3.png"
+    },
+    {
+      "index": 3,
+      "job_id": "9e91214d-9f1d-434e-9e43-4f560f004855",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022626_9e91214d-9f1d-434e-9e43-4f560f004855.png"
+    },
+    {
+      "index": 4,
+      "job_id": "2ad5f2a3-538e-4b87-88de-03a3d04448aa",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022749_2ad5f2a3-538e-4b87-88de-03a3d04448aa.png"
+    },
+    {
+      "index": 5,
+      "job_id": "f623053a-4d86-49dd-8093-c409452aa030",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022911_f623053a-4d86-49dd-8093-c409452aa030.png"
+    },
+    {
+      "index": 6,
+      "job_id": "c88a7827-ee64-4c58-8d0f-513efed00c70",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_023040_c88a7827-ee64-4c58-8d0f-513efed00c70.png"
+    },
+    {
+      "index": 7,
+      "job_id": "f5c648db-856e-42d9-9930-cca52f16882f",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_023234_f5c648db-856e-42d9-9930-cca52f16882f.png"
+    },
+    {
+      "index": 8,
+      "job_id": "4d0a0e98-2bbf-421d-8731-7e7732f846fd",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_023408_4d0a0e98-2bbf-421d-8731-7e7732f846fd.png"
+    },
+    {
+      "index": 9,
+      "job_id": "66740eab-7697-4bc3-9195-9f23c20b91d4",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_023554_66740eab-7697-4bc3-9195-9f23c20b91d4.png"
+    },
+    {
+      "index": 10,
+      "job_id": "efecf95f-3fcf-474a-860c-c174bd46c00f",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2_6",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_023759_efecf95f-3fcf-474a-860c-c174bd46c00f.png"
+    }
+  ],
+  "repair": {
+    "job_id": "e316bb6c-1b18-4956-9d21-f07e8fae30c7",
+    "status": "completed",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_024051_e316bb6c-1b18-4956-9d21-f07e8fae30c7.png",
+    "review": "Reviewed red lamp correction, rest unchanged."
+  },
+  "videos": [
+    {
+      "filename": "01_wake_pump",
+      "shot": 1,
+      "part": 1,
+      "seconds": 20,
+      "job_id": "c00c3dca-c7ca-4bcb-9113-f041a27d5ecd"
+    },
+    {
+      "filename": "02_read_manifold_1",
+      "shot": 2,
+      "part": 1,
+      "seconds": 20,
+      "job_id": "17388b67-ecdc-4060-9db4-7db48d296774",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 20,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "eb1caebb-a85c-4808-b7de-b23e9c10a5e3"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single continuous cinematic realistic shot inside Lab 04. Start from supplied frame, maintain same man, outfit, four analog gauges, industrial room and amber/green lighting. Reference sheet is identity only. Camera locked tripod 28mm. Walks to the wall manifold, scans four analog gauges left to right. Since he starts close to the manifold, take a natural half step in and settle his hand, then inspect each gauge carefully. Deliberate relaxed pacing over 20 seconds. Christian speaks exactly once: \"Manifold first. Pressure's holding, scrubber needle is in the green.\". Quiet dry humor and fatigue. Room hum and soft mechanical pump only; no music or extra dialogue. Preserve anatomy and physical hand contact. No HUD, overlays, subtitles, cuts, camera movement, horror silhouettes or other people. End still inspecting manifold, ready to tap one gauge next."
+      }
+    },
+    {
+      "filename": "02_read_manifold_2",
+      "shot": 2,
+      "part": 2,
+      "seconds": 15,
+      "job_id": "3c5e7180-f6c4-47fc-95ee-72510a746cea",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 15,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "56aa3a9d-f17d-45b8-8553-027570296358"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single uninterrupted cinematic realism shot, 15 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 2, read_manifold, part 2. Lens: 28 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Continues studying the four gauges, gently taps one glass with a finger, relaxes.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Good. Boring is good.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+      }
+    },
+    {
+      "filename": "03_check_watch",
+      "shot": 3,
+      "part": 1,
+      "seconds": 25,
+      "job_id": "36054460-0c72-45f9-99bf-b47fa6e2ce63",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 25,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "9e91214d-9f1d-434e-9e43-4f560f004855"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single uninterrupted cinematic realism shot, 25 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 3, check_watch, part 1. Lens: 35 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Raises his left wrist, presses the dive watch twice with his right hand, looks down at it, exhales.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Watch says fifteen meters, and the nitrogen is climbing like it does every hour. Seventeen hours to decompress when I finally go up. Not today.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+      }
+    },
+    {
+      "filename": "04_log_stock",
+      "shot": 4,
+      "part": 1,
+      "seconds": 30,
+      "job_id": "46aaa676-8a03-453b-b66f-32d04f8860c0",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 30,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "2ad5f2a3-538e-4b87-88de-03a3d04448aa"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single uninterrupted cinematic realism shot, 30 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 4, log_stock, part 1. Lens: 32 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: At the lab bench, lifts a small recorder to his mouth and speaks, counting items off with his free hand.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Day one log. Diesel tank, 2000 litres, burning 2 litres an hour. Desalinator makes 20 litres of water a day. Pantry count: 700 meals. Do the math later. Math is for later.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+      }
+    },
+    {
+      "filename": "05_telemetry_fault",
+      "shot": 5,
+      "part": 1,
+      "seconds": 30,
+      "job_id": "31fb537b-d8a7-40ee-8170-e84a26f59df8",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 30,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "f623053a-4d86-49dd-8093-c409452aa030"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single uninterrupted cinematic realism shot, 30 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 5, telemetry_fault, part 1. Lens: 20 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Looks up at an announcement, turns toward a wall panel where a red fault lamp blinks, lowers the recorder, walks over.\n\nDIALOGUE: Station loudspeaker, calm neutral automated voice; Christian does not speak. Speak EXACTLY these words once, no additions, no paraphrases: \"Hydrophone array, channel three, no signal.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+      }
+    },
+    {
+      "filename": "06_clear_fault_1",
+      "shot": 6,
+      "part": 1,
+      "seconds": 20,
+      "job_id": "368791aa-7aa9-4892-aa43-3ed8436a99da",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 20,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "e316bb6c-1b18-4956-9d21-f07e8fae30c7"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single uninterrupted cinematic realism shot, 20 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 6, clear_fault, part 1. Lens: 32 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Works at the telemetry panel, examines the bus tray and pulls it out with both hands. Red fault lamp remains lit.\nThe fault lamp starts red and stays red during pulling/reseating until the reset button is pressed; only after that press turn it green.\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Channel three. I wrote this firmware. Of course it's channel three.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+      }
+    },
+    {
+      "filename": "06_clear_fault_2",
+      "shot": 6,
+      "part": 2,
+      "seconds": 20,
+      "job_id": "b982baf5-8854-40b1-ad6f-ee4a4d537942",
+      "params": {
+        "model": "seedance_2_5",
+        "mode": "omni_reference",
+        "resolution": "720p",
+        "duration": 20,
+        "generate_audio": true,
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "start_image",
+            "value": "bd17b2a5-b932-42fc-a424-649fa3730e7f"
+          },
+          {
+            "role": "image",
+            "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+          }
+        ],
+        "prompt": "Single uninterrupted cinematic realism shot, 20 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 6, clear_fault, part 2. Lens: 32 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Pushes the bus tray back into place firmly with both hands, then presses the red lamp reset; the lamp turns green.\nThe fault lamp starts red and stays red during pulling/reseating until the reset button is pressed; only after that press turn it green.\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Reseat the bus, clear the fault, don't take it personally.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+      }
+    }
+  ],
+  "completedvideos": [
+    {
+      "index": 0,
+      "job_id": "c00c3dca-c7ca-4bcb-9113-f041a27d5ecd",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_022550_c00c3dca-c7ca-4bcb-9113-f041a27d5ecd.mp4"
+    },
+    {
+      "index": 1,
+      "job_id": "17388b67-ecdc-4060-9db4-7db48d296774",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_023359_17388b67-ecdc-4060-9db4-7db48d296774.mp4"
+    },
+    {
+      "index": 2,
+      "job_id": "3c5e7180-f6c4-47fc-95ee-72510a746cea",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_024314_3c5e7180-f6c4-47fc-95ee-72510a746cea.mp4"
+    },
+    {
+      "index": 3,
+      "job_id": "36054460-0c72-45f9-99bf-b47fa6e2ce63",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_025048_36054460-0c72-45f9-99bf-b47fa6e2ce63.mp4"
+    },
+    {
+      "index": 4,
+      "job_id": "46aaa676-8a03-453b-b66f-32d04f8860c0",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_030701_46aaa676-8a03-453b-b66f-32d04f8860c0.mp4"
+    },
+    {
+      "index": 5,
+      "job_id": "31fb537b-d8a7-40ee-8170-e84a26f59df8",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_031555_31fb537b-d8a7-40ee-8170-e84a26f59df8.mp4"
+    },
+    {
+      "index": 6,
+      "job_id": "368791aa-7aa9-4892-aa43-3ed8436a99da",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_032428_368791aa-7aa9-4892-aa43-3ed8436a99da.mp4"
+    },
+    {
+      "index": 7,
+      "job_id": "b982baf5-8854-40b1-ad6f-ee4a4d537942",
+      "status": "completed",
+      "type": "video",
+      "model": "seedance_2_5",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Lvjsa6oQDknLBS8EqgeXA3ZyQP/hf_20261115_033319_b982baf5-8854-40b1-ad6f-ee4a4d537942.mp4"
+    }
+  ],
+  "blockers": [
+    {
+      "date": "2026-11-15",
+      "note": "Higgsfield rejects use_unlim from Claude Code (request f23c8c26-689c-4cc4-9d38-acd01255c48a): unlimited generations only work from Claude chat, Claude Cowork or ChatGPT. No job submitted for 07. Remaining clips: see remaining-clips.md."
+    }
+  ]
+}

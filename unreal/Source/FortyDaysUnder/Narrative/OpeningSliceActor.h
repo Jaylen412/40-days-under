@@ -5,6 +5,7 @@
 #include "OpeningSliceActor.generated.h"
 
 class ALevelSequenceActor;
+class UIntroFootageComponent;
 class USliceDirector;
 
 /**
@@ -31,6 +32,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Narrative", meta = (ClampMin = "0.0"))
 	double ResyncToleranceSeconds = 0.25;
 
+	/** Higgsfield clips shown full screen before the slice starts; the director loads when they end. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Narrative")
+	TObjectPtr<UIntroFootageComponent> IntroFootage;
+
 	UFUNCTION(BlueprintPure, Category = "Narrative")
 	USliceDirector* GetDirector() const
 	{
@@ -56,4 +61,7 @@ private:
 
 	UFUNCTION()
 	void HandleBeatStarted(FName BeatId);
+
+	UFUNCTION()
+	void StartSlice();
 };

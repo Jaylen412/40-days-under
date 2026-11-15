@@ -1,0 +1,85 @@
+{
+  "stills": {
+    "01a": "Reviewed: lying cot, detailed room, no HUD or silhouettes.",
+    "01b": "Reviewed: sitting pose, grounded feet; room layout differs from 01a.",
+    "02": "Reviewed: four physical gauges and credible hand contact.",
+    "03": "Reviewed: left wrist watch, no HUD.",
+    "04": "Reviewed: bench/logging pose; recorder partly occluded.",
+    "05": "Reviewed: red fault lamp and lowered recorder.",
+    "06": "Reviewed correction e316bb6c-1b18-4956-9d21-f07e8fae30c7: red lamp, matching pose and room.",
+    "07": "Reviewed: yellow wheel, strained posture, hands contacting rim.",
+    "08": "Reviewed: braced knees, both hands on wheel.",
+    "09": "Reviewed: dark human silhouettes outside dome, no gore.",
+    "10": "Reviewed: closing bench pose, no silhouettes."
+  },
+  "videos": {
+    "01": {
+      "job_id": "c00c3dca-c7ca-4bcb-9113-f041a27d5ecd",
+      "duration": 20.064,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Sampled 0/4/8/12/16s and final frame: lies, sits, rubs face, stands. Minor camera drift. First-pass usable, not final continuity approval.",
+      "asr": "That thump, the pump's still running, okay, it's still running.",
+      "dialogue": "Close but not verified verbatim. Automated transcription adds articles; no numerical line in this shot."
+    },
+    "02_1": {
+      "duration": 20.064,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Sampled frames show gauge inspection with continuous framing.",
+      "asr": "Manifold first, pressure's holding, scrubber needle is in the green."
+    },
+    "02_2": {
+      "duration": 15.072,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Sampled frames maintain continuation pose and gauge layout, hand drops after inspection."
+    },
+    "03": {
+      "duration": 25.056,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Sampled frames: checks left wrist, then lowers arms. No HUD or silhouettes.",
+      "asr": "Watch says 15 meters, and the nitrogen is climbing like it does every hour, 17 hours to decompress when I finally go up. Not today.",
+      "numbers_checked": true
+    },
+    "04": {
+      "duration": 30.08,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Sampled frames retain bench composition and counting/logging gestures. Recorder is small and partly occluded.",
+      "asr": "Day one log, diesel tank, 2,000 liters, burning two liters an hour, desalinate makes 20 liters of water a day, pantry count, 700 meals. Do the math later. Math is for later.\n",
+      "numbers_checked": true
+    },
+    "05": {
+      "duration": 30.08,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Turns toward red lamp, lowers recorder, walks to panel. Significant framing change conflicts with locked camera; draft only.",
+      "asr": "Hydraphone array, channel three, no signal.\n"
+    },
+    "06_1": {
+      "duration": 20.064,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Bus tray handled with both hands. Lamp turns green prematurely by sampled 15s, before planned part-two reset; correction needed.",
+      "asr": "I wrote this firmware. Of course it's channel 3.\n",
+      "local_edit": "2026-11-15: local copy trimmed to 0-16.5 s (lamp turns green at ~16.8 s), so it cuts cleanly into part 2 which starts red. Original remains at result_url."
+    },
+    "06_2": {
+      "job_id": "b982baf5-8854-40b1-ad6f-ee4a4d537942",
+      "duration": 20.042,
+      "width": 1280,
+      "height": 720,
+      "audio": true,
+      "review": "Sampled 0/5/10/15 s and final frame: starts red, bus tray reseated, presses reset, lamp green by 10 s, steps back. Usable. Dialogue not transcribed."
+    }
+  }
+}

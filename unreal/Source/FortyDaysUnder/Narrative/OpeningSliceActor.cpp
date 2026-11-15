@@ -1,4 +1,5 @@
 #include "Narrative/OpeningSliceActor.h"
+#include "Narrative/IntroFootageComponent.h"
 #include "LevelSequenceActor.h"
 #include "LevelSequencePlayer.h"
 #include "Misc/Paths.h"
@@ -10,11 +11,30 @@ DEFINE_LOG_CATEGORY_STATIC(LogOpeningSlice, Log, All);
 AOpeningSliceActor::AOpeningSliceActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	IntroFootage = CreateDefaultSubobject<UIntroFootageComponent>(TEXT("IntroFootage"));
 }
 
 void AOpeningSliceActor::BeginPlay()
 {
 	Super::BeginPlay();
+	if (IntroFootage)
+	{
+		IntroFootage->OnFinished.AddDynamic(this, &AOpeningSliceActor::StartSlice);
+		if (IntroFootage->StartIntro())
+		{
+			return;
+		}
+		IntroFootage->OnFinished.RemoveDynamic(this, &AOpeningSliceActor::StartSlice);
+	}
+	StartSlice();
+}
+
+void AOpeningSliceActor::StartSlice()
+{
+	if (Director)
+	{
+		return;
+	}
 	Director = NewObject<USliceDirector>(this);
 	// Bind before loading: a successful load announces the first beat.
 	Director->OnBeatStarted.AddDynamic(this, &AOpeningSliceActor::HandleBeatStarted);

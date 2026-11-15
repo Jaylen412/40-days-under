@@ -1,0 +1,196 @@
+[
+  {
+    "seconds": 30,
+    "action": "Looks up at an announcement, turns toward a wall panel where a red fault lamp blinks, lowers the recorder, walks over.",
+    "line": "(Station) Hydrophone array, channel three, no signal.",
+    "shot": 5,
+    "beat": "telemetry_fault",
+    "part": 1,
+    "filename": "05_telemetry_fault",
+    "lens": "20 mm",
+    "params": {
+      "model": "seedance_2_5",
+      "mode": "omni_reference",
+      "resolution": "720p",
+      "duration": 30,
+      "generate_audio": true,
+      "aspect_ratio": "16:9",
+      "count": 1,
+      "use_unlim": true,
+      "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "f623053a-4d86-49dd-8093-c409452aa030"
+        },
+        {
+          "role": "image",
+          "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+        }
+      ],
+      "prompt": "Single uninterrupted cinematic realism shot, 30 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 5, telemetry_fault, part 1. Lens: 20 mm. Absolutely fixed tripod for all 30 seconds: the framing of the final frame is identical to the start frame. No pan, tilt, zoom, reframe, follow or cut. The wall panel with the red fault lamp is already visible in the start frame; he walks to it within this fixed frame.\nACTION: Looks up at an announcement, turns toward a wall panel where a red fault lamp blinks, lowers the recorder, walks over.\n\nDIALOGUE: Station loudspeaker, calm neutral automated voice; Christian does not speak. Speak EXACTLY these words once, no additions, no paraphrases: \"Hydrophone array, channel three, no signal.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+    },
+    "redo_reason": "First take reframed significantly; camera must stay locked."
+  },
+  {
+    "seconds": 25,
+    "action": "Grips a yellow valve wheel on the intake bulkhead, strains twice, it does not move; steps back and shakes out his hand.",
+    "line": "Intake bulkhead valve is seized. Zebra mussels, probably. Manual crank, then.",
+    "shot": 7,
+    "beat": "valve_stuck",
+    "part": 1,
+    "filename": "07_valve_stuck",
+    "lens": "30 mm",
+    "params": {
+      "model": "seedance_2_5",
+      "mode": "omni_reference",
+      "resolution": "720p",
+      "duration": 25,
+      "generate_audio": true,
+      "aspect_ratio": "16:9",
+      "count": 1,
+      "use_unlim": true,
+      "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "f5c648db-856e-42d9-9930-cca52f16882f"
+        },
+        {
+          "role": "image",
+          "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+        }
+      ],
+      "prompt": "Single uninterrupted cinematic realism shot, 25 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 7, valve_stuck, part 1. Lens: 30 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Grips a yellow valve wheel on the intake bulkhead, strains twice, it does not move; steps back and shakes out his hand.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Intake bulkhead valve is seized. Zebra mussels, probably. Manual crank, then.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+    }
+  },
+  {
+    "seconds": 25,
+    "action": "Braced with knees bent, hauls the yellow valve wheel hand over hand; it first moves only in stubborn jerks.",
+    "line": "Come on. Come on. There. It's moving.",
+    "shot": 8,
+    "beat": "crank_valve",
+    "part": 1,
+    "filename": "08_crank_valve_1",
+    "lens": "28 mm, slow push-in",
+    "params": {
+      "model": "seedance_2_5",
+      "mode": "omni_reference",
+      "resolution": "720p",
+      "duration": 25,
+      "generate_audio": true,
+      "aspect_ratio": "16:9",
+      "count": 1,
+      "use_unlim": true,
+      "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "4d0a0e98-2bbf-421d-8731-7e7732f846fd"
+        },
+        {
+          "role": "image",
+          "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+        }
+      ],
+      "prompt": "Single uninterrupted cinematic realism shot, 25 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 8, crank_valve, part 1. Lens: 28 mm, slow push-in. Only a very slow smooth push-in; no pan, tilt, cut or handheld shake.\nACTION: Braced with knees bent, hauls the yellow valve wheel hand over hand; it first moves only in stubborn jerks.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Come on. Come on. There. It's moving.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+    }
+  },
+  {
+    "seconds": 20,
+    "action": "Keeps cranking the same valve hand over hand; the jerks grow faster and smoother. Natural breath and effort.",
+    "line": "Slow and steady, nobody's timing me.",
+    "shot": 8,
+    "beat": "crank_valve",
+    "part": 2,
+    "filename": "08_crank_valve_2",
+    "lens": "28 mm, slow push-in",
+    "params": {
+      "model": "seedance_2_5",
+      "mode": "omni_reference",
+      "resolution": "720p",
+      "duration": 20,
+      "generate_audio": true,
+      "aspect_ratio": "16:9",
+      "count": 1,
+      "use_unlim": true,
+      "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "<media id of the last frame of 08_crank_valve_1>"
+        },
+        {
+          "role": "image",
+          "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+        }
+      ],
+      "prompt": "Single uninterrupted cinematic realism shot, 20 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 8, crank_valve, part 2. Lens: 28 mm, slow push-in. Only a very slow smooth push-in; no pan, tilt, cut or handheld shake.\nACTION: Keeps cranking the same valve hand over hand; the jerks grow faster and smoother. Natural breath and effort.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Slow and steady, nobody's timing me.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+    },
+    "note": "Submit after 08_crank_valve_1 completes: extract its last frame, upload it as an image and use that media id as start_image (same method as 02 and 06 part 2)."
+  },
+  {
+    "seconds": 30,
+    "action": "Walks to the centre of the room, looks up through the acrylic dome, takes half a step back and holds still. Dark human silhouettes drift against pale green light above. No gore, shapes only.",
+    "line": "Okay. Look up. Just once. ...They're still up there. Hundreds of them, blocking the light. Not coming down. They can't come down.",
+    "shot": 9,
+    "beat": "dome_look",
+    "part": 1,
+    "filename": "09_dome_look",
+    "lens": "18 mm low angle, slow push-in",
+    "params": {
+      "model": "seedance_2_5",
+      "mode": "omni_reference",
+      "resolution": "720p",
+      "duration": 30,
+      "generate_audio": true,
+      "aspect_ratio": "16:9",
+      "count": 1,
+      "use_unlim": true,
+      "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "66740eab-7697-4bc3-9195-9f23c20b91d4"
+        },
+        {
+          "role": "image",
+          "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+        }
+      ],
+      "prompt": "Single uninterrupted cinematic realism shot, 30 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 9, dome_look, part 1. Lens: 18 mm low angle, slow push-in. Only a very slow smooth push-in; no pan, tilt, cut or handheld shake.\nACTION: Walks to the centre of the room, looks up through the acrylic dome, takes half a step back and holds still. Dark human silhouettes drift against pale green light above. No gore, shapes only.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"Okay. Look up. Just once. ...They're still up there. Hundreds of them, blocking the light. Not coming down. They can't come down.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nDark human silhouettes drift outside the dome in murky pale green river water; shapes only, no gore, none enter the lab.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+    }
+  },
+  {
+    "seconds": 20,
+    "action": "Looks down, walks back to the bench, speaks into the recorder, sets it down, glances up over his shoulder at the dome.",
+    "line": "End of entry. Lab 04 is stable. Supply boat comes in three weeks. I just have to keep the lights on until then.",
+    "shot": 10,
+    "beat": "log_close",
+    "part": 1,
+    "filename": "10_log_close",
+    "lens": "35 mm",
+    "params": {
+      "model": "seedance_2_5",
+      "mode": "omni_reference",
+      "resolution": "720p",
+      "duration": 20,
+      "generate_audio": true,
+      "aspect_ratio": "16:9",
+      "count": 1,
+      "use_unlim": true,
+      "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+      "medias": [
+        {
+          "role": "start_image",
+          "value": "efecf95f-3fcf-474a-860c-c174bd46c00f"
+        },
+        {
+          "role": "image",
+          "value": "58c39f98-e7f8-4a0e-bb18-7a3c97104f78"
+        }
+      ],
+      "prompt": "Single uninterrupted cinematic realism shot, 20 seconds. Continue directly from the supplied start frame, with identical Christian Thomas, face, costume, room and props. Character sheet is identity reference only, never panels. Shot 10, log_close, part 1. Lens: 35 mm. Absolutely fixed tripod, no camera movement or cuts.\nACTION: Looks down, walks back to the bench, speaks into the recorder, sets it down, glances up over his shoulder at the dome.\n\nDIALOGUE: Christian speaks in a consistent low, natural adult American voice, calm, domestic, slightly tired with dry humor. Speak EXACTLY these words once, no additions, no paraphrases: \"End of entry. Lab 04 is stable. Supply boat comes in three weeks. I just have to keep the lights on until then.\"\nPreserve every spoken number exactly. Let pauses and physical action fill the duration. Only natural room hum, pump rhythm, footsteps, fabric and appropriate prop sounds. No music, no extra speech.\nNo visible horror silhouettes or bodies outside the dome in this shot.\nNo HUD, captions, subtitles, titles, overlay text, montage or new people. Physical gauges and wristwatch only. Credible hands, feet, weight and prop contact. Dry breathable lab interior, amber practicals and green caustics. Maintain canonical height 175.26 cm and lean proportions."
+    }
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "seconds": 20,
+    "action": "Lies on a cot, turns his head toward the hull to listen, sits up, rubs his face with both hands, stands.",
+    "line": "That thump. Pump's still running. Okay. Still running.",
+    "shot": 1,
+    "beat": "wake_pump",
+    "part": 1,
+    "filename": "01_wake_pump",
+    "lens": "22 mm"
+  },
+  {
+    "seconds": 20,
+    "action": "Walks to the wall manifold, scans four analog gauges left to right.",
+    "line": "Manifold first. Pressure's holding, scrubber needle is in the green.",
+    "shot": 2,
+    "beat": "read_manifold",
+    "part": 1,
+    "filename": "02_read_manifold_1",
+    "lens": "28 mm"
+  },
+  {
+    "seconds": 15,
+    "action": "Continues studying the four gauges, gently taps one glass with a finger, relaxes.",
+    "line": "Good. Boring is good.",
+    "shot": 2,
+    "beat": "read_manifold",
+    "part": 2,
+    "filename": "02_read_manifold_2",
+    "lens": "28 mm"
+  },
+  {
+    "seconds": 25,
+    "action": "Raises his left wrist, presses the dive watch twice with his right hand, looks down at it, exhales.",
+    "line": "Watch says fifteen meters, and the nitrogen is climbing like it does every hour. Seventeen hours to decompress when I finally go up. Not today.",
+    "shot": 3,
+    "beat": "check_watch",
+    "part": 1,
+    "filename": "03_check_watch",
+    "lens": "35 mm"
+  },
+  {
+    "seconds": 30,
+    "action": "At the lab bench, lifts a small recorder to his mouth and speaks, counting items off with his free hand.",
+    "line": "Day one log. Diesel tank, 2000 litres, burning 2 litres an hour. Desalinator makes 20 litres of water a day. Pantry count: 700 meals. Do the math later. Math is for later.",
+    "shot": 4,
+    "beat": "log_stock",
+    "part": 1,
+    "filename": "04_log_stock",
+    "lens": "32 mm"
+  },
+  {
+    "seconds": 30,
+    "action": "Looks up at an announcement, turns toward a wall panel where a red fault lamp blinks, lowers the recorder, walks over.",
+    "line": "(Station) Hydrophone array, channel three, no signal.",
+    "shot": 5,
+    "beat": "telemetry_fault",
+    "part": 1,
+    "filename": "05_telemetry_fault",
+    "lens": "20 mm"
+  },
+  {
+    "seconds": 20,
+    "action": "Works at the telemetry panel, examines the bus tray and pulls it out with both hands. Red fault lamp remains lit.",
+    "line": "Channel three. I wrote this firmware. Of course it's channel three.",
+    "shot": 6,
+    "beat": "clear_fault",
+    "part": 1,
+    "filename": "06_clear_fault_1",
+    "lens": "32 mm"
+  },
+  {
+    "seconds": 20,
+    "action": "Pushes the bus tray back into place firmly with both hands, then presses the red lamp reset; the lamp turns green.",
+    "line": "Reseat the bus, clear the fault, don't take it personally.",
+    "shot": 6,
+    "beat": "clear_fault",
+    "part": 2,
+    "filename": "06_clear_fault_2",
+    "lens": "32 mm"
+  },
+  {
+    "seconds": 25,
+    "action": "Grips a yellow valve wheel on the intake bulkhead, strains twice, it does not move; steps back and shakes out his hand.",
+    "line": "Intake bulkhead valve is seized. Zebra mussels, probably. Manual crank, then.",
+    "shot": 7,
+    "beat": "valve_stuck",
+    "part": 1,
+    "filename": "07_valve_stuck",
+    "lens": "30 mm"
+  },
+  {
+    "seconds": 25,
+    "action": "Braced with knees bent, hauls the yellow valve wheel hand over hand; it first moves only in stubborn jerks.",
+    "line": "Come on. Come on. There. It's moving.",
+    "shot": 8,
+    "beat": "crank_valve",
+    "part": 1,
+    "filename": "08_crank_valve_1",
+    "lens": "28 mm, slow push-in"
+  },
+  {
+    "seconds": 20,
+    "action": "Keeps cranking the same valve hand over hand; the jerks grow faster and smoother. Natural breath and effort.",
+    "line": "Slow and steady, nobody's timing me.",
+    "shot": 8,
+    "beat": "crank_valve",
+    "part": 2,
+    "filename": "08_crank_valve_2",
+    "lens": "28 mm, slow push-in"
+  },
+  {
+    "seconds": 30,
+    "action": "Walks to the centre of the room, looks up through the acrylic dome, takes half a step back and holds still. Dark human silhouettes drift against pale green light above. No gore, shapes only.",
+    "line": "Okay. Look up. Just once. ...They're still up there. Hundreds of them, blocking the light. Not coming down. They can't come down.",
+    "shot": 9,
+    "beat": "dome_look",
+    "part": 1,
+    "filename": "09_dome_look",
+    "lens": "18 mm low angle, slow push-in"
+  },
+  {
+    "seconds": 20,
+    "action": "Looks down, walks back to the bench, speaks into the recorder, sets it down, glances up over his shoulder at the dome.",
+    "line": "End of entry. Lab 04 is stable. Supply boat comes in three weeks. I just have to keep the lights on until then.",
+    "shot": 10,
+    "beat": "log_close",
+    "part": 1,
+    "filename": "10_log_close",
+    "lens": "35 mm"
+  }
+]

@@ -1,0 +1,441 @@
+{
+  "project_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+  "workspace_id": "3099fdee-59d0-45db-a8a8-e4a7a4bb7016",
+  "readme_file_id": "9fd06dbc-4973-4a71-b284-a53cd62ba904",
+  "payment": "user-approved free trial only; no paid fallback",
+  "shots": [
+    {
+      "n": 1,
+      "beat": "wake_pump",
+      "files": [
+        "01a_wake_pump_lying.jpg",
+        "01b_wake_pump_sitting.jpg"
+      ],
+      "seconds": 20,
+      "lens": "22 mm",
+      "action": "Lies on a cot, turns his head toward the hull to listen, sits up, rubs his face with both hands, stands.",
+      "line": "That thump. Pump's still running. Okay. Still running."
+    },
+    {
+      "n": 2,
+      "beat": "read_manifold",
+      "files": [
+        "02_read_manifold.jpg"
+      ],
+      "seconds": 35,
+      "lens": "28 mm",
+      "action": "Walks to the wall manifold, scans four analog gauges left to right, taps one glass with a finger.",
+      "line": "Manifold first. Pressure's holding, scrubber needle is in the green. Good. Boring is good."
+    },
+    {
+      "n": 3,
+      "beat": "check_watch",
+      "files": [
+        "03_check_watch.jpg"
+      ],
+      "seconds": 25,
+      "lens": "35 mm",
+      "action": "Raises his left wrist, presses the dive watch twice with his right hand, looks down at it, exhales.",
+      "line": "Watch says fifteen meters, and the nitrogen is climbing like it does every hour. Seventeen hours to decompress when I finally go up. Not today."
+    },
+    {
+      "n": 4,
+      "beat": "log_stock",
+      "files": [
+        "04_log_stock.jpg"
+      ],
+      "seconds": 30,
+      "lens": "32 mm",
+      "action": "At the lab bench, lifts a small recorder to his mouth and speaks, counting items off with his free hand.",
+      "line": "Day one log. Diesel tank, 2000 litres, burning 2 litres an hour. Desalinator makes 20 litres of water a day. Pantry count: 700 meals. Do the math later. Math is for later."
+    },
+    {
+      "n": 5,
+      "beat": "telemetry_fault",
+      "files": [
+        "05_telemetry_fault.jpg"
+      ],
+      "seconds": 30,
+      "lens": "20 mm",
+      "action": "Looks up at an announcement, turns toward a wall panel where a red fault lamp blinks, lowers the recorder, walks over.",
+      "line": "(Station) Hydrophone array, channel three, no signal."
+    },
+    {
+      "n": 6,
+      "beat": "clear_fault",
+      "files": [
+        "06_clear_fault.jpg"
+      ],
+      "seconds": 40,
+      "lens": "32 mm",
+      "action": "Works at the telemetry panel, pulls a bus tray out and pushes it back with both hands, presses the lamp; it turns green.",
+      "line": "Channel three. I wrote this firmware. Of course it's channel three. Reseat the bus, clear the fault, don't take it personally."
+    },
+    {
+      "n": 7,
+      "beat": "valve_stuck",
+      "files": [
+        "07_valve_stuck.jpg"
+      ],
+      "seconds": 25,
+      "lens": "30 mm",
+      "action": "Grips a yellow valve wheel on the intake bulkhead, strains twice, it does not move; steps back and shakes out his hand.",
+      "line": "Intake bulkhead valve is seized. Zebra mussels, probably. Manual crank, then."
+    },
+    {
+      "n": 8,
+      "beat": "crank_valve",
+      "files": [
+        "08_crank_valve.jpg"
+      ],
+      "seconds": 45,
+      "lens": "28 mm, slow push-in",
+      "action": "Braced with knees bent, hauls the wheel hand over hand; it moves in jerks that get faster.",
+      "line": "Come on. Come on. There. It's moving. Slow and steady, nobody's timing me."
+    },
+    {
+      "n": 9,
+      "beat": "dome_look",
+      "files": [
+        "09_dome_look.jpg"
+      ],
+      "seconds": 30,
+      "lens": "18 mm low angle, slow push-in",
+      "action": "Walks to the centre of the room, looks up through the acrylic dome, takes half a step back and holds still. Dark human silhouettes drift against pale green light above. No gore, shapes only.",
+      "line": "Okay. Look up. Just once. ...They're still up there. Hundreds of them, blocking the light. Not coming down. They can't come down."
+    },
+    {
+      "n": 10,
+      "beat": "log_close",
+      "files": [
+        "10_log_close.jpg"
+      ],
+      "seconds": 20,
+      "lens": "35 mm",
+      "action": "Looks down, walks back to the bench, speaks into the recorder, sets it down, glances up over his shoulder at the dome.",
+      "line": "End of entry. Lab 04 is stable. Supply boat comes in three weeks. I just have to keep the lights on until then."
+    }
+  ],
+  "imageplans": [
+    {
+      "file": "01a_wake_pump_lying.jpg",
+      "shot": 1,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "0646efe4-15eb-45b2-9790-58264de34f8a"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 22 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 1 wake_pump. Action context: Lies on a cot, turns his head toward the hull to listen, sits up, rubs his face with both hands, stands.\nFreeze the specific source pose: lying on cot before sitting up. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "01b_wake_pump_sitting.jpg",
+      "shot": 1,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "61bdadad-78b3-451f-adca-158b3e096104"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 22 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 1 wake_pump. Action context: Lies on a cot, turns his head toward the hull to listen, sits up, rubs his face with both hands, stands.\nFreeze the specific source pose: sitting on cot, feet grounded. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "02_read_manifold.jpg",
+      "shot": 2,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "7914ffd6-58a9-44a0-b8f6-650e7e1d1092"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 28 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 2 read_manifold. Action context: Walks to the wall manifold, scans four analog gauges left to right, taps one glass with a finger.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "03_check_watch.jpg",
+      "shot": 3,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "7bd7a4a9-45a4-47e1-b96d-102d58d89bf4"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 35 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 3 check_watch. Action context: Raises his left wrist, presses the dive watch twice with his right hand, looks down at it, exhales.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "04_log_stock.jpg",
+      "shot": 4,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "c9450421-eb13-42ce-9c0a-42037705b676"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 32 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 4 log_stock. Action context: At the lab bench, lifts a small recorder to his mouth and speaks, counting items off with his free hand.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "05_telemetry_fault.jpg",
+      "shot": 5,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "f50490b9-5147-4808-8394-333588c9bf9d"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 20 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 5 telemetry_fault. Action context: Looks up at an announcement, turns toward a wall panel where a red fault lamp blinks, lowers the recorder, walks over.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "06_clear_fault.jpg",
+      "shot": 6,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "c4333b7a-fbe3-40e9-8cb2-eb743c27c309"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 32 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 6 clear_fault. Action context: Works at the telemetry panel, pulls a bus tray out and pushes it back with both hands, presses the lamp; it turns green.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "07_valve_stuck.jpg",
+      "shot": 7,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "2b847c2b-e3bd-49df-8361-e1bb092f3da5"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 30 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 7 valve_stuck. Action context: Grips a yellow valve wheel on the intake bulkhead, strains twice, it does not move; steps back and shakes out his hand.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "08_crank_valve.jpg",
+      "shot": 8,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "be3782b7-a3b0-4be1-9f65-c15973d123bb"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 28 mm, slow push-in lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 8 crank_valve. Action context: Braced with knees bent, hauls the wheel hand over hand; it moves in jerks that get faster.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "09_dome_look.jpg",
+      "shot": 9,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "b715e47c-7777-41e4-9ba2-beb9d0c1eaa3"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 18 mm low angle, slow push-in lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. Only vague dark human silhouettes visible beyond dome, no gore.\nShot 9 dome_look. Action context: Walks to the centre of the room, looks up through the acrylic dome, takes half a step back and holds still. Dark human silhouettes drift against pale green light above. No gore, shapes only.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    },
+    {
+      "file": "10_log_close.jpg",
+      "shot": 10,
+      "params": {
+        "model": "gpt_image_2_6",
+        "resolution": "2k",
+        "quality": "medium",
+        "aspect_ratio": "16:9",
+        "count": 1,
+        "use_unlim": true,
+        "folder_id": "7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5",
+        "medias": [
+          {
+            "role": "image",
+            "value": "954cd1f8-419e-4cd1-8dc5-273d4ae06c42"
+          },
+          {
+            "role": "image",
+            "value": "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+          }
+        ],
+        "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 35 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 10 log_close. Action context: Looks down, walks back to the bench, speaks into the recorder, sets it down, glances up over his shoulder at the dome.\nFreeze the specific source pose: the pose shown in composition reference. Output single frame, no panels."
+      }
+    }
+  ],
+  "imagejobs": [
+    {
+      "file": "01a_wake_pump_lying.jpg",
+      "response": {
+        "results": [
+          {
+            "id": "5da449f1-5057-440d-9945-1778b68511bb",
+            "type": "image",
+            "status": "pending",
+            "model": "gpt_image_2_6",
+            "params": {
+              "prompt": "Create one cinematic realism frame. Use image 1 only for camera framing, pose and composition; replace graybox and box proxy with detailed realistic materials and the canonical character <<<4284877d-9158-4176-98aa-f7344abff977>>>. Image 2 is the locked Lab 04 environment reference.\nOriginal anchor briefs, verbatim, for identity, costume and environment reference only (do not render a turnaround sheet):\nFull-body character turnaround sheet of Christian Thomas, 28-year-old African American male, 5'9\", 150 lbs, lean and athletic muscular build, rich brown skin complexion, sharp jawline, focused expression with subtle fatigue under his eyes, short crisp haircut with neat 360 waves. Three-angle orthographic view (front, 3/4 side profile, back) on a neutral dark slate studio background. Wearing weathered charcoal neoprene drysuit pants, heavy-duty modular tactical dive harness with brass carabiners, a faded navy Detroit marine-robotics engineering utility jacket with rolled sleeves, ruggedized digital dive watch on left wrist, and a compact telemetry tablet strapped to his thigh. Stylized-realistic 3D game character art, subsurface scattering on skin, wet fabric specular highlights, crisp rim lighting, 8k texture detail, Unreal Engine 5 MetaHuman fidelity.\nNegative prompt: photorealistic stock photo, cartoon, anime, bulky armor, exaggerated proportions, braids, afro, fade without waves, smiling, cluttered background, cropped feet, inconsistent anatomy across views.\n\nInterior of Lab 04, a refurbished industrial underwater benthic research station 15 meters below the Detroit River. Rusted steel bulkheads reinforced with bolted patch plates, tangled yellow ROV umbilical cables, analog pressure manifold gauges glowing dimly, and a humming air-scrubber unit. Through a massive reinforced acrylic ceiling dome and angled observation viewports, murky emerald-green freshwater stretches upward toward the surface—silhouetting dozens of eerie, motionless floating zombie corpses drifting in the river current like a dark living ceiling blocking the overcast sky. Volumetric god-rays of pale diffused sunlight pierce between the floating silhouettes, casting caustic water ripples across the metallic lab floor. Stylized-realistic 3D game environment, atmospheric fog, Unreal Engine 5 Lumen global illumination.\nNegative prompt: clear tropical blue ocean, coral reef, tropical fish, clean sterile sci-fi spaceship, bright neon cyberpunk colors, gore close-ups, dry land.\nSHOT OVERRIDES: One continuous scene, one Christian, 16:9. Preserve source composition and 22 mm lens. Christian is 175.26 cm, keep canonical face and outfit. Physically credible feet and hands. No HUD, subtitles or overlay text. Readouts only on physical props. Dry breathable interior, warm amber practical lighting, murky green river outside. Calm domestic slightly funny tone. No visible bodies or horror silhouettes in this shot.\nShot 1 wake_pump. Action context: Lies on a cot, turns his head toward the hull to listen, sits up, rubs his face with both hands, stands.\nFreeze the specific source pose: lying on cot before sitting up. Output single frame, no panels.",
+              "aspect_ratio": "16:9",
+              "reference_images": [
+                "0646efe4-15eb-45b2-9790-58264de34f8a",
+                "a583d3d9-57d8-4eba-9bab-cd31e6346ac9"
+              ],
+              "resolution": "2k",
+              "quality": "medium"
+            }
+          }
+        ],
+        "adjustments": {
+          "medias[0].role": {
+            "requested": "image",
+            "used": "image_references",
+            "reason": "GPT Image 2.6 backend expects schema-key media roles"
+          },
+          "medias[1].role": {
+            "requested": "image",
+            "used": "image_references",
+            "reason": "GPT Image 2.6 backend expects schema-key media roles"
+          }
+        }
+      }
+    },
+    {
+      "file": "01b_wake_pump_sitting.jpg",
+      "response": {
+        "error": "gpt_image_2_6 backend request failed (429): rate_limit_reached",
+        "adjustments": {
+          "medias[0].role": {
+            "requested": "image",
+            "used": "image_references",
+            "reason": "GPT Image 2.6 backend expects schema-key media roles"
+          },
+          "medias[1].role": {
+            "requested": "image",
+            "used": "image_references",
+            "reason": "GPT Image 2.6 backend expects schema-key media roles"
+          }
+        },
+        "error_code": "INVALID_ARGUMENT"
+      }
+    }
+  ]
+}

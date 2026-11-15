@@ -23,7 +23,8 @@ public class FortyDaysUnder : ModuleRules
 			"Json",
 			"JsonUtilities",
 			"LevelSequence",
-			"MovieScene"
+			"MovieScene",
+			"MediaAssets"
 		});
 	}
 }

@@ -5,7 +5,16 @@ Purpose: turn the graybox blocking of the ten opening beats into realistic foota
 and environment come from the locked anchors below, not from these stills.
 
 Sent 2026-11-14: the eleven stills were uploaded to the Higgsfield media library as image inputs
-(IDs below). No generation has been run, no credits were spent, and this README itself was not uploaded.
+(IDs below). On the same date, Codex created private project `40 Days Under — Day 1 Realism Pass`
+(project and default folder `7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5`, workspace
+`3099fdee-59d0-45db-a8a8-e4a7a4bb7016`) and attached all eleven inputs.
+
+The user approved free-trial generation and full README export. The original handoff README was
+uploaded and attached as file `9fd06dbc-4973-4a71-b284-a53cd62ba904`. Generation is now in progress
+using `use_unlim=true` only: GPT Image 2.6, 2K/medium, then Seedance 2.5, 720p with audio.
+No paid fallback is authorized. See `realism-run.json`, `realism-motion-plan.json` and
+`realism-results.json` for exact prompts, clip splits and recorded job results. The three beats
+longer than 30 seconds are split into two clips; the planned runtime remains 300 seconds.
 
 | Still | Higgsfield media ID |
 | :--- | :--- |

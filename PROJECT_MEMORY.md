@@ -3,7 +3,7 @@ engine: "Unreal Engine 5.8 (C++20)"
 dcc_tool: "Blender 4.x"
 mcp_servers: ["higgsfield", "filesystem"]
 last_updated_by: "Claude Code"
-timestamp: "2026-11-15T02:40:00Z"
+timestamp: "2026-11-15T10:10:00Z"
 
 # PROJECT_MEMORY.md — Single Source of Truth
 
@@ -39,6 +39,8 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
 - `[ACTIVE]` `FDualSenseFeedbackProfile`, `UDualSenseFeedbackComponent`, `FDualSenseDeviceRoute`: trigger/lightbar/pump feedback and device-routing filter. `SonyPadHooks.h` is a stub.
 - `[ACTIVE]` `FSliceInteractionModel`, `ASliceInteractable`, `USliceInteractorComponent` (`Source/FortyDaysUnder/Interaction/`): Use / Gaze / Hold rules as a plain struct, a level actor that is live only during its beat and sends that beat's completion event, and the player-side view trace. `AUnderwaterCharacter` owns an interactor and builds default input in code for any unassigned action.
 - `[ACTIVE]` `AOpeningSliceActor`, `FSlicePlaybackSync`: level actor that owns a `USliceDirector`, loads `Data/Narrative/opening_slice.json`, ticks it, and keeps a level sequence on the current beat. `USliceDirector` gained `BeatStartSeconds(Id)` and `TotalSeconds()`.
+- `[ACTIVE]` `FFootagePlaylist`, `UIntroFootageComponent` (2026-11-15): Higgsfield realism clips play full screen with audio as a cold open when `L_OpeningSlice` starts. The component is a default subobject of `AOpeningSliceActor`, which now loads the director only when the intro ends (`StartSlice`). The manifest `Data/Narrative/opening_slice_footage.json` lists all 13 planned clips in order and skips missing files. Clips live in `Content/Movies/Higgsfield/` (8 of 13 downloaded, H.264/AAC 720p, ~35 MB). Space / gamepad A skips one clip, Esc / Start skips all. The intro is off under `-unattended`, so tests are unaffected. `DefaultGame.ini` stages `Data` and `Movies` as non-UFS. Verified in a `-game` run: clip 1 played its full length and clip 2 opened. Not yet visually checked on screen by the user. Tests `FortyDaysUnder.Footage.{Parse,Playback,Manifest}`; 41 of 41 pass.
+- `[ACTIVE]` **DEC-012 (2026-11-15):** the goal is a game rendered in the Higgsfield realism look. Pre-rendered clips are only a cold open; the playable look comes from turning Higgsfield stills into 3D assets (image-to-3D GLB, Blender cleanup, FBX, UE). Steps: `docs/Art/HiggsfieldToGame.md`.
 - `[ACTIVE]` `UAct2StateMachine`, `USliceDirector`: Act 2 branching choices, siege countdown, prep tasks, and JSON-driven Day 1 opening slice playback.
 
 ## 3. Blender-to-UE5 Asset Pipeline Status
@@ -87,5 +89,32 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
   - Task 6: Art production sheet and FBX export checklist (`8fb6530`).
 - **Task 7 status (2026-11-14):** the editor target did not build at `76a4884`. Two fixes, uncommitted: `DualSenseFeedbackComponent.cpp` called the protected `APlayerController::GetInputIndex()` (now `GetLocalPlayer()->GetControllerId()`, the same lookup), and `FortyDaysUnder.Build.cs` lacked `EngineSettings` for `UGameMapsSettings`. After them an incremental build succeeds and all `FortyDaysUnder.*` tests (33 then, 38 now) log `Result={Success}`, none `Fail`. A from-scratch clean build was not run.
 - **Known limitations:** No authored Lab 04 3D level or Blender assets; no authored haptic WAVs; Sony controller-speaker hooks require PS5 SDK; real controller feel has not been verified on hardware.
-- **Slice next step:** run the Higgsfield realism generations from the uploaded stills using `handoff/higgsfield/README.md` (confirm credit cost with the user first). Playable slice still needs: beat lines delivered diegetically, a first-person body and wrist watch, and a decision on reusing the Blender performance in play.
+- **Slice next step:** [SUPERSEDED by Section 5 "Next" below, 2026-11-15] run the Higgsfield realism generations from the uploaded stills using `handoff/higgsfield/README.md` (confirm credit cost with the user first). Playable slice still needs: beat lines delivered diegetically, a first-person body and wrist watch, and a decision on reusing the Blender performance in play.
 - **Next immediate step:** commit the two build fixes, then the next phase: authoring the graybox Lab 04 level, placing `AUnderwaterCharacter`, and implementing `AROVCompanionPawn`. Detailed prior ledger: `.superpowers/sdd/2026-11-14-first-pass/progress.md` (git-ignored).
+
+## 5. Higgsfield realism preparation (2026-11-14, Codex)
+
+- Created private project `40 Days Under — Day 1 Realism Pass`: project/default folder `7eb0db6e-4dbf-4e27-bbed-ac2709daa8c5`, workspace `3099fdee-59d0-45db-a8a8-e4a7a4bb7016`. All eleven README still media IDs were attached successfully. Reuse this destination.
+- No generation submitted and no generation credits spent. Await the user's payment-route choice as requested in the handoff.
+- Live catalog: GPT Image 2.6 at 2k/medium supports image references; Seedance 2.5 supports start images, audio and 4–30 second clips. Free unlimited trial covers these image settings and Seedance 2.5 at 720p, up to 30 seconds, until 2026-11-17T11:17:18Z (6:17 a.m. EST). User must explicitly choose use_unlim=true; do not silently select paid fallback.
+- Paid preflight: one 2k/medium image = 1 credit; one 20-second 720p omni-reference video with audio = 140 credits. Available balance observed: 9.5 credits. Other clip durations have not been quoted.
+- Proposed first pass: eleven restyled 16:9 stills, then thirteen clips totaling 300 seconds. Beats 2/6/8 split as 20+15, 20+20, 25+20 seconds; others preserve README durations. Review stills before motion, carry identity and interior anchors, retain exact dialogue and camera constraints. Original scope prompts include turnaround composition and visible horror; retain their text as requested but explicitly restrict turnaround to identity reference and visible silhouettes to shot 9.
+- README upload slot reserved as file_input `d0e45b3e-d53a-49f3-b09e-7f4d5815a6b9`, but automatic approval review rejected the sandbox command before upload because exporting the full internal README requires explicit user authorization. No upload confirmation or project attachment was performed. Do not claim README is uploaded; obtain explicit approval before retrying (URL may expire).
+- Next: user approves free trial generation (recommended, 0 credits) or a separately quoted paid batch, and explicitly authorizes README export. Then upload/confirm/attach README, generate and inspect eleven realism frames, generate motion clips, inspect results, and record job IDs here and in the handoff.
+
+### Approved execution (2026-11-14)
+- User explicitly approved free-trial generation and full README export. README uploaded, confirmed and attached: file_input `9fd06dbc-4973-4a71-b284-a53cd62ba904`, placement `5d96623a-f7c8-426b-a758-4f9bfd3b7905`. This supersedes the upload blocker above.
+- First image submitted with `use_unlim=true`: 01a job `5da449f1-5057-440d-9945-1778b68511bb`. Second submission rejected with HTTP 429 rate_limit_reached, no second job returned. Await first job before retrying.
+
+- Progress checkpoint: wake-up video `c00c3dca-c7ca-4bcb-9113-f041a27d5ecd` completed (1280x720, 20.064 seconds, audio present). Sampled poses include lie/sit/rub face/stand. ASR is close but not verbatim; minor camera drift. Manifold part 1 `17388b67-ecdc-4060-9db4-7db48d296774` is processing.
+- Image 06 `c88a7827-ee64-4c58-8d0f-513efed00c70` needs a red-lamp start variant; generated still has lamp green before the reset. Other reviewed images through shot 09 preserve core props and outfit, but room layout varies between shots. Outputs are first-pass realism references, not final continuity-approved footage. Balance remains 9.5 credits.
+
+- All eleven original stills completed and visually reviewed. Corrected shot 06 red-lamp start: job `e316bb6c-1b18-4956-9d21-f07e8fae30c7`, reviewed. Total generated stills: twelve including correction.
+- Manifold part 1 completed; part 2 job `3c5e7180-f6c4-47fc-95ee-72510a746cea` submitted from extracted last frame media `56aa3a9d-f17d-45b8-8553-027570296358`. Remaining video pipeline uses same approach for second parts of beats 6/8.
+- Live recovery ledger: `handoff/higgsfield/realism-results.json` is updated on each video submission and completion. Never resubmit jobs listed there merely because a chat was interrupted. `realism-video-prompts.json` records the initial planned prompts; results ledger records actual references used.
+
+### Next (2026-11-15)
+- `[SUPERSEDED]` "Check job b982baf5 first": done. 06 part 2 completed and was reviewed (usable) and downloaded. The local 06 part 1 is trimmed to 0-16.5 s, because the lamp went green at ~16.8 s and the cut into part 2 (which starts red) broke continuity. The original is still at its result URL. 8 of 13 clips are now in `Content/Movies/Higgsfield/`.
+- **Blocker:** Higgsfield rejects `use_unlim` from Claude Code (only Claude chat, Cowork or ChatGPT). The paid route is ~140 credits per 20 s clip vs a 9.5 credit balance; no paid route is authorized. Six clips remain (redo 05, then 07, 08 part 1, 08 part 2, 09, 10). Exact params: `handoff/higgsfield/remaining-clips.json`. Run steps: `handoff/higgsfield/remaining-clips.md`. Trial ends 2026-11-17T11:17:18Z.
+- After the user runs them elsewhere: download each to `unreal/Content/Movies/Higgsfield/<filename>.mp4`, record the job IDs in `realism-results.json`, and sample frames to review them. Swift AVFoundation helpers (frames, contact sheet, trim) were used because no ffmpeg is installed.
+- Then step 2 of `docs/Art/HiggsfieldToGame.md`: a locked Lab 04 layout sheet, then a cost-quoted (`get_cost:true`) image-to-3D test on one hero prop (valve wheel), taken through Blender to UE.
