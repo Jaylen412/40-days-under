@@ -1,0 +1,57 @@
+{
+  "_comment": "Higgsfield realism clips played as the opening cold open, in order. Missing files are skipped, so later clips can be dropped into Content/Movies/Higgsfield without code changes.",
+  "clips": [
+    {
+      "beat": "wake_pump",
+      "file": "Movies/Higgsfield/01_wake_pump.mp4"
+    },
+    {
+      "beat": "read_manifold",
+      "file": "Movies/Higgsfield/02_read_manifold_1.mp4"
+    },
+    {
+      "beat": "read_manifold",
+      "file": "Movies/Higgsfield/02_read_manifold_2.mp4"
+    },
+    {
+      "beat": "check_watch",
+      "file": "Movies/Higgsfield/03_check_watch.mp4"
+    },
+    {
+      "beat": "log_stock",
+      "file": "Movies/Higgsfield/04_log_stock.mp4"
+    },
+    {
+      "beat": "telemetry_fault",
+      "file": "Movies/Higgsfield/05_telemetry_fault.mp4"
+    },
+    {
+      "beat": "clear_fault",
+      "file": "Movies/Higgsfield/06_clear_fault_1.mp4"
+    },
+    {
+      "beat": "clear_fault",
+      "file": "Movies/Higgsfield/06_clear_fault_2.mp4"
+    },
+    {
+      "beat": "valve_stuck",
+      "file": "Movies/Higgsfield/07_valve_stuck.mp4"
+    },
+    {
+      "beat": "crank_valve",
+      "file": "Movies/Higgsfield/08_crank_valve_1.mp4"
+    },
+    {
+      "beat": "crank_valve",
+      "file": "Movies/Higgsfield/08_crank_valve_2.mp4"
+    },
+    {
+      "beat": "dome_look",
+      "file": "Movies/Higgsfield/09_dome_look.mp4"
+    },
+    {
+      "beat": "log_close",
+      "file": "Movies/Higgsfield/10_log_close.mp4"
+    }
+  ]
+}

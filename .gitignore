@@ -40,3 +40,7 @@ unreal/Content/Collections/
 
 # Stray Xcode workspace left at the repo root by project creation
 /FortyDaysUnder/
+
+# Blender: save backups and FBX exports are regenerated from the .blend
+*.blend1
+blender/export/
