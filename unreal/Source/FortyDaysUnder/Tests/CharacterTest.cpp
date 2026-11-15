@@ -88,4 +88,19 @@ bool FCharacterLabToggleTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCharacterLookPitchSignTest, "FortyDaysUnder.Character.LookPitchSign", FortyDaysUnderCharacterTest::Flags)
+bool FCharacterLookPitchSignTest::RunTest(const FString& Parameters)
+{
+	// Look input arrives as "up is positive"; the final pitch change must be positive (look up) in every config.
+	for (const bool bLegacy : {false, true})
+	{
+		for (const float Scale : {-2.5f, 1.0f, 2.5f})
+		{
+			const float Applied = bLegacy ? Scale : 1.0f;
+			const float PitchDelta = AUnderwaterCharacter::PitchSignFor(bLegacy, Scale) * 1.0f * Applied;
+			TestTrue(FString::Printf(TEXT("up looks up (legacy=%d scale=%.1f)"), bLegacy, Scale), PitchDelta > 0.0f);
+		}
+	}
+	return true;
+}
 #endif

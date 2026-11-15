@@ -78,6 +78,8 @@ public:
 	static float LatencyFor(const FVitalsSnapshot& Snapshot);
 	static float LowPassHzFor(const FVitalsSnapshot& Snapshot);
 	static float VignetteFor(const FVitalsSnapshot& Snapshot);
+	/** Sign applied to look-up input so that pushing up always looks up, whatever the controller's pitch scale. */
+	static float PitchSignFor(bool bLegacyInputScales, float LegacyPitchScale);
 
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;

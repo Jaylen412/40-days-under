@@ -43,6 +43,10 @@ void AOpeningSliceActor::StartSlice()
 	{
 		UE_LOG(LogOpeningSlice, Error, TEXT("Opening slice not started: %s"), *Error);
 	}
+	else
+	{
+		UE_LOG(LogOpeningSlice, Log, TEXT("Opening slice started: %d beats, first %s"), Director->NumBeats(), *Director->CurrentBeatId().ToString());
+	}
 }
 
 void AOpeningSliceActor::Tick(float DeltaSeconds)

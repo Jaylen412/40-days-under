@@ -67,8 +67,11 @@ private:
 	FSlateBrush Brush;
 	TSharedPtr<SWidget> Overlay;
 	bool bPlaying = false;
+	/** Set from media-player callbacks; acted on next tick so the player is never closed inside its own event. */
+	bool bAdvancePending = false;
 
 	void OpenCurrent();
+	void AdvanceClip();
 	void Finish();
 	void SetPlayerControl(bool bEnable);
 

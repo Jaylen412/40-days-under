@@ -104,12 +104,20 @@ void UIntroFootageComponent::OpenCurrent()
 	UE_LOG(LogIntroFootage, Log, TEXT("Playing %s (%s)"), *Clip->File, *Clip->BeatId.ToString());
 	if (!Player->OpenSource(Source))
 	{
-		HandleOpenFailed(Clip->File);
+		UE_LOG(LogIntroFootage, Warning, TEXT("Could not open %s; skipping it"), *Clip->File);
+		bAdvancePending = true;
 	}
 }
 
 void UIntroFootageComponent::HandleEndReached()
 {
+	// Called from the media player's own event: defer to the next tick.
+	bAdvancePending = bPlaying;
+}
+
+void UIntroFootageComponent::AdvanceClip()
+{
+	bAdvancePending = false;
 	if (!bPlaying)
 	{
 		return;
@@ -127,13 +135,17 @@ void UIntroFootageComponent::HandleEndReached()
 void UIntroFootageComponent::HandleOpenFailed(FString FailedUrl)
 {
 	UE_LOG(LogIntroFootage, Warning, TEXT("Could not open %s; skipping it"), *FailedUrl);
-	HandleEndReached();
+	bAdvancePending = bPlaying;
 }
 
 void UIntroFootageComponent::TickComponent(
 	float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (bAdvancePending)
+	{
+		AdvanceClip();
+	}
 	APlayerController* PC = GetWorld() ? GetWorld()->GetFirstPlayerController() : nullptr;
 	if (!bPlaying || !PC)
 	{
@@ -149,7 +161,7 @@ void UIntroFootageComponent::TickComponent(
 		{
 			Player->Close();
 		}
-		HandleEndReached();
+		AdvanceClip();
 	}
 }
 
@@ -170,6 +182,8 @@ void UIntroFootageComponent::Finish()
 		return;
 	}
 	bPlaying = false;
+	bAdvancePending = false;
+	UE_LOG(LogIntroFootage, Log, TEXT("Intro finished; returning control"));
 	SetComponentTickEnabled(false);
 	if (Player)
 	{

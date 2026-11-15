@@ -16,6 +16,7 @@
 #include "InputMappingContext.h"
 #include "InputModifiers.h"
 #include "Interaction/SliceInteractorComponent.h"
+#include "GameFramework/InputSettings.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
 #include "Survival/SurvivalVitalsComponent.h"
@@ -177,6 +178,13 @@ void AUnderwaterCharacter::SetCameraBlend(float Alpha)
 	ThirdPersonCamera->SetActive(bThird);
 }
 
+float AUnderwaterCharacter::PitchSignFor(bool bLegacyInputScales, float LegacyPitchScale)
+{
+	// The controller multiplies pitch input by its legacy scale when legacy scales are on. Its default in
+	// BaseGame.ini is negative (-2.5), but UE 5.8 may load it as +1, so choose the sign from the real value.
+	return (bLegacyInputScales && LegacyPitchScale < 0.0f) ? -1.0f : 1.0f;
+}
+
 float AUnderwaterCharacter::LatencyFor(const FVitalsSnapshot& Snapshot)
 {
 	return MaxLatencySeconds * static_cast<float>(FMath::Clamp(Snapshot.DcsSeverity, 0.0, 1.0));
@@ -328,7 +336,7 @@ void AUnderwaterCharacter::EnsureDefaultInput()
 			Mapping.Modifiers.Add(Mod);
 		}
 	};
-	const FVector X(1, 0, 0), Y(0, 1, 0);
+	const FVector X(1, 0, 0);
 	// Move: X is strafe right, Y is forward (see ApplyInput).
 	UInputAction* Move = Default(MoveAction, TEXT("IA_Default_Move"), EInputActionValueType::Axis2D);
 	Map(Move, EKeys::D);
@@ -336,10 +344,10 @@ void AUnderwaterCharacter::EnsureDefaultInput()
 	Map(Move, EKeys::W, true);
 	Map(Move, EKeys::S, true, X);
 	Map(Move, EKeys::Gamepad_Left2D);
-	// Look: the legacy pitch scale is negative, so Y is flipped to make up mean up.
+	// Look: Y is "up is positive" here; ApplyInput corrects for the sign of the controller's pitch scale.
 	UInputAction* Look = Default(LookAction, TEXT("IA_Default_Look"), EInputActionValueType::Axis2D);
-	Map(Look, EKeys::Mouse2D, false, Y, 0.04f);
-	Map(Look, EKeys::Gamepad_Right2D, false, Y, 0.6f);
+	Map(Look, EKeys::Mouse2D, false, FVector::ZeroVector, 0.04f);
+	Map(Look, EKeys::Gamepad_Right2D, false, FVector::ZeroVector, 0.6f);
 	UInputAction* Ascend = Default(AscendAction, TEXT("IA_Default_Ascend"), EInputActionValueType::Axis1D);
 	Map(Ascend, EKeys::SpaceBar);
 	Map(Ascend, EKeys::LeftControl, false, X);
@@ -401,7 +409,15 @@ void AUnderwaterCharacter::ApplyInput(const FDelayedInput& Input)
 	if (!Input.Look.IsNearlyZero())
 	{
 		AddControllerYawInput(Input.Look.X);
-		AddControllerPitchInput(Input.Look.Y);
+		float LegacyPitchScale = 1.0f;
+		const bool bLegacy = GetDefault<UInputSettings>()->bEnableLegacyInputScales;
+		if (const APlayerController* PC = Cast<APlayerController>(Controller); PC && bLegacy)
+		{
+			PRAGMA_DISABLE_DEPRECATION_WARNINGS
+			LegacyPitchScale = PC->GetDeprecatedInputPitchScale();
+			PRAGMA_ENABLE_DEPRECATION_WARNINGS
+		}
+		AddControllerPitchInput(PitchSignFor(bLegacy, LegacyPitchScale) * Input.Look.Y);
 	}
 	if (!FMath::IsNearlyZero(Input.Ascend))
 	{
