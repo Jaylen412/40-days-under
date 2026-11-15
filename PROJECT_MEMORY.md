@@ -3,7 +3,7 @@ engine: "Unreal Engine 5.8 (C++20)"
 dcc_tool: "Blender 4.x"
 mcp_servers: ["higgsfield", "filesystem"]
 last_updated_by: "Claude Code"
-timestamp: "2026-11-15T02:20:00Z"
+timestamp: "2026-11-15T02:40:00Z"
 
 # PROJECT_MEMORY.md — Single Source of Truth
 
@@ -69,6 +69,7 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
 - Default bindings (code-built, used only for unassigned actions): move WASD / left stick; look mouse / right stick; Interact E, left mouse, gamepad bottom face button; Watch Q, gamepad top face button; toggle camera C / right stick click; ascend Space, descend Left Ctrl.
 - Verified headless in Play: an automated run that teleports the pawn, aims the view and sets input on the interactor completed all ten beats in order, with the lamp swap and wheel spin observed; the pawn stands on the deck (`SM_Lab04_Graybox_Static` now uses complex-as-simple collision); the input context registers 16 key mappings; 38 of 38 tests pass. The user then played `L_OpeningSlice` with real input on 2026-11-14 and confirmed the controls and interactions work.
 - Not done for the playable slice: no dialogue lines are shown or spoken, no first-person body, watch or hands, no animation plays on interaction, the player starts standing at the cot, not lying down, and the red lamp does not blink.
+- `[ACTIVE]` Higgsfield realism handoff (2026-11-14): `handoff/higgsfield/README.md` (shot list with anchors, per-shot action prompts, lines, lenses, constraints) and `handoff/higgsfield/frames/` (eleven 1920x1080 graybox stills, one per beat, two for beat 1). Prepared only; nothing has been sent to Higgsfield and no reference video was rendered. The user will revisit changes as the project progresses.
 - Known gaps: the stand-in has Manny proportions (1.805 m), not Christian's 1.7526 m, until `SKEL_Christian` exists; first refinement pass only (see below); prop animation (valve wheel, needles, fault lamp), cameras and set are not exported; cot and station layout are placeholder calls, not from concept 8.3; no audio. UE logs "invalid bind poses" on import because the FBX carries no mesh.
 - Refinement pass 1 (2026-11-14): root stays on the deck and the `pelvis` bone carries lying, sitting, crouching and stride bob. Wake is lie, listen, sit up, rub face, stand. Walks are four-phase steps at 1.25 m/s. Added gauge tap, watch button presses, counting gestures at the log, two-handed bus reseat then lamp reset, failed valve attempts with a step back, braced ratchet cranking that speeds up (wheel ends at about 403 degrees), a half step back under the dome, a last glance up at the close, and breathing on `spine_03`. All ten FBX files were re-exported after this pass; the UE import test predates it and was not repeated.
 - Still rough: forward kinematics only, so feet are not planted (up to 3 cm through the deck at walk starts, 2 to 4 cm of float at contact); hands do not lock to props; the log recorder stays on the bench when he "lifts" it; no fingers or face.
@@ -86,5 +87,5 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
   - Task 6: Art production sheet and FBX export checklist (`8fb6530`).
 - **Task 7 status (2026-11-14):** the editor target did not build at `76a4884`. Two fixes, uncommitted: `DualSenseFeedbackComponent.cpp` called the protected `APlayerController::GetInputIndex()` (now `GetLocalPlayer()->GetControllerId()`, the same lookup), and `FortyDaysUnder.Build.cs` lacked `EngineSettings` for `UGameMapsSettings`. After them an incremental build succeeds and all `FortyDaysUnder.*` tests (33 then, 38 now) log `Result={Success}`, none `Fail`. A from-scratch clean build was not run.
 - **Known limitations:** No authored Lab 04 3D level or Blender assets; no authored haptic WAVs; Sony controller-speaker hooks require PS5 SDK; real controller feel has not been verified on hardware.
-- **Slice next step:** the playable slice is user-verified. Next: deliver the beat lines diegetically (audio or in-world text), give the player a first-person body and wrist watch, and decide how the Blender performance is reused (third-person camera, or per-interaction clips).
+- **Slice next step:** run the Higgsfield realism pass from `handoff/higgsfield/README.md` (user decides when to send). Playable slice still needs: beat lines delivered diegetically, a first-person body and wrist watch, and a decision on reusing the Blender performance in play.
 - **Next immediate step:** commit the two build fixes, then the next phase: authoring the graybox Lab 04 level, placing `AUnderwaterCharacter`, and implementing `AROVCompanionPawn`. Detailed prior ledger: `.superpowers/sdd/2026-11-14-first-pass/progress.md` (git-ignored).
