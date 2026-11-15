@@ -1,0 +1,89 @@
+{
+  "SM_Lab04_Manifold": {
+    "location_cm": [
+      0.0,
+      -430.0,
+      0.0
+    ],
+    "yaw_deg": 0.0,
+    "replaces": "GB_Lab04_Gauge_Panel + dials + gauge valves",
+    "tris": 11068,
+    "bounds_m": [
+      [
+        -1.475,
+        -0.188,
+        0.0
+      ],
+      [
+        1.475,
+        0.1,
+        2.13
+      ]
+    ],
+    "slots": [
+      "M_Lab04_PaintedSteel",
+      "M_Lab04_BareSteel",
+      "M_Lab04_GaugeFace",
+      "M_Lab04_Brass",
+      "M_Lab04_GaugeInk",
+      "M_Lab04_GaugeRed",
+      "M_Lab04_ValvePaint"
+    ]
+  },
+  "SM_Lab04_TelemetryRack": {
+    "location_cm": [
+      329.4,
+      -276.4,
+      0.0
+    ],
+    "yaw_deg": -40.0,
+    "replaces": "GB_Lab04_Telemetry_Panel + GB_Telemetry_Bus_Tray",
+    "tris": 3608,
+    "bounds_m": [
+      [
+        -0.268,
+        -0.6,
+        0.0
+      ],
+      [
+        0.12,
+        0.6,
+        2.6
+      ]
+    ],
+    "slots": [
+      "M_Lab04_PaintedSteel",
+      "M_Lab04_BareSteel",
+      "M_Lab04_PanelGrey",
+      "M_Lab04_Vent",
+      "M_Lab04_LedAmber",
+      "M_Lab04_LedGreen",
+      "M_Lab04_Brass",
+      "M_Lab04_Rubber"
+    ]
+  },
+  "SM_Lab04_DiveWatch": {
+    "location_cm": null,
+    "yaw_deg": null,
+    "replaces": null,
+    "tris": 2084,
+    "bounds_m": [
+      [
+        -0.022,
+        -0.063,
+        0.0
+      ],
+      [
+        0.026,
+        0.063,
+        0.015
+      ]
+    ],
+    "slots": [
+      "M_Lab04_BareSteel",
+      "M_Lab04_WatchBezel",
+      "M_Lab04_WatchScreen",
+      "M_Lab04_Rubber"
+    ]
+  }
+}

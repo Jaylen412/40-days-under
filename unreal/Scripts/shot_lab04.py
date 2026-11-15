@@ -13,7 +13,13 @@ views = [
     ("bench", unreal.Vector(40, 110, 165), unreal.Vector(187, 325, 80)),
     ("recorder", unreal.Vector(150, 225, 145), unreal.Vector(192, 293, 92)),
     ("scrubber", unreal.Vector(-20, -60, 165), unreal.Vector(-237, -303, 100)),
+    ("manifold", unreal.Vector(0, -200, 165), unreal.Vector(0, -430, 150)),
+    ("gauge", unreal.Vector(-30, -360, 160), unreal.Vector(-30, -415, 165)),
+    ("telemetry", unreal.Vector(160, -130, 160), unreal.Vector(320, -270, 130)),
+    ("lamp", unreal.Vector(250, -230, 175), unreal.Vector(299, -290, 180)),
 ]
+ONLY = {"manifold", "gauge", "telemetry", "lamp"}  # e.g. {"manifold", "telemetry"} to render a subset
+views = [v for v in views if ONLY is None or v[0] in ONLY]
 rt = unreal.RenderingLibrary.create_render_target2d(world, 1280, 720, unreal.TextureRenderTargetFormat.RTF_RGBA8_SRGB)
 cap = sub.spawn_actor_from_class(unreal.SceneCapture2D, views[0][1])
 comp = cap.capture_component2d

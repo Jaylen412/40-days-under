@@ -1,6 +1,7 @@
 """Build the Higgsfield-derived Lab 04 props and a graybox static set without the blocks they replace.
 
 Run: blender -b blender/starting-animation.blend --python blender/props/build_lab04_props.py
+(and blender/props/build_lab04_handmade.py for the manifold, telemetry rack and watch).
 
 SAM 3D returns each object upright, axis-aligned, front facing -Y, long side on X, about 1 m across.
 Each prop gets its pivot at the bottom centre and is scaled to its real size. The script writes:
@@ -25,7 +26,10 @@ PROPS = {
     "AirScrubber": ("hf_20261115_103743_356b245d-ec8f-49e7-a192-60a956b702ca.glb", (None, None, 2.2), "GB_Lab04_AirScrubber_Unit", -90.0),
 }
 # Graybox objects removed from the static set (the scrubber's pipe goes with its unit).
-REMOVED = {"GB_Lab04_Cot", "GB_Lab04_Bench_Lab", "GB_LogRecorder", "GB_Lab04_AirScrubber_Unit", "GB_Lab04_Scrubber_Pipe"}
+REMOVED = {"GB_Lab04_Cot", "GB_Lab04_Bench_Lab", "GB_LogRecorder", "GB_Lab04_AirScrubber_Unit", "GB_Lab04_Scrubber_Pipe",
+           # Replaced by the hand-modelled manifold and telemetry rack (build_lab04_handmade.py).
+           "GB_Lab04_Gauge_Panel", "GB_Lab04_Telemetry_Panel", "GB_Telemetry_Bus_Tray"}
+REMOVED_PREFIX = ("GB_Gauge_Dial_", "GB_Gauge_Valve_")
 # Exported separately as movable actors (unchanged), never part of the static set.
 MOVABLE = {"GB_Lab04_Intake_Valve_Wheel", "GB_Lab04_Intake_Valve_Spoke", "GB_Telemetry_FaultLamp_HydroCh3"}
 MOVABLE_PREFIX = ("GB_Gauge_Needle_",)
@@ -121,7 +125,7 @@ def walk(c):
     for ch in c.children:
         yield from walk(ch)
 keep = [o for o in walk(gb_col) if o.type == 'MESH' and o.name not in REMOVED and o.name not in MOVABLE
-        and not o.name.startswith(MOVABLE_PREFIX)]
+        and not o.name.startswith(MOVABLE_PREFIX) and not o.name.startswith(REMOVED_PREFIX)]
 copies = []
 for o in keep:
     c = o.copy(); c.data = o.data.copy(); c.parent = None; c.matrix_world = o.matrix_world.copy()

@@ -31,6 +31,8 @@ look and the 3D sources.
   SAM 3D lift per prop picked out by text prompt (5 credits for the four). Scripts:
   `blender/props/build_lab04_props.py`, then `unreal/Scripts/import_lab04_props.py`. They're placed in both opening-slice levels.
 - The manifold, telemetry panel and watch are modelled by hand (DEC-013), because their gauges, lamp and screen are live.
+  Done in `blender/props/build_lab04_handmade.py`. The manifold and rack are placed around the live needles and lamp. The watch
+  is an asset only, until first-person arms exist.
 
 ## To build the game in the Higgsfield look
 

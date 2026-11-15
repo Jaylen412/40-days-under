@@ -1,7 +1,9 @@
-"""Import the Higgsfield-derived Lab 04 props, reimport the graybox static set without the blocks they
-replace, and place the props in L_OpeningSlice and L_OpeningSlice_Preview.
+"""Import the Lab 04 props, reimport the graybox static set without the blocks they replace, and place the
+props in L_OpeningSlice and L_OpeningSlice_Preview.
 
-Inputs come from blender/props/build_lab04_props.py (FBX, textures, lab04_props_placement.json).
+Inputs: blender/props/build_lab04_props.py (Higgsfield-derived props: FBX, textures, lab04_props_placement.json)
+and blender/props/build_lab04_handmade.py (manifold, telemetry rack, dive watch: FBX, lab04_handmade_placement.json).
+Hand-modelled meshes use the shared materials defined in HANDMADE_MATERIALS below.
 Run inside the editor:
   UnrealEditor <project> -EnablePlugins=PythonScriptPlugin -RenderOffscreen -unattended
       -ExecCmds="py <this file>"
@@ -15,6 +17,27 @@ PROJECT = unreal.Paths.convert_relative_path_to_full(unreal.Paths.project_dir())
 REPO = os.path.abspath(os.path.join(PROJECT, ".."))
 EXPORT = os.path.join(REPO, "blender", "export")
 PLACEMENT = os.path.join(REPO, "blender", "props", "lab04_props_placement.json")
+HANDMADE = os.path.join(REPO, "blender", "props", "lab04_handmade_placement.json")
+MATERIALS = "/Game/Environments/Lab04/Materials"
+WATCH_DEST = "/Game/Characters/Christian/Watch"
+# name: (base colour, roughness, metallic, max grime/rust blend 0-1, emissive colour or None)
+HANDMADE_MATERIALS = {
+    "M_Lab04_PaintedSteel": ((0.20, 0.25, 0.22), 0.62, 0.15, 0.55, None),
+    "M_Lab04_BareSteel": ((0.50, 0.50, 0.50), 0.42, 1.0, 0.35, None),
+    "M_Lab04_PanelGrey": ((0.28, 0.29, 0.28), 0.55, 0.3, 0.3, None),
+    "M_Lab04_Vent": ((0.025, 0.025, 0.025), 0.8, 0.0, 0.0, None),
+    "M_Lab04_GaugeFace": ((0.86, 0.82, 0.70), 0.45, 0.0, 0.0, None),
+    "M_Lab04_GaugeInk": ((0.02, 0.02, 0.02), 0.6, 0.0, 0.0, None),
+    "M_Lab04_GaugeRed": ((0.60, 0.04, 0.03), 0.5, 0.0, 0.0, None),
+    "M_Lab04_Brass": ((0.78, 0.58, 0.28), 0.35, 1.0, 0.0, None),
+    "M_Lab04_ValvePaint": ((0.78, 0.55, 0.04), 0.5, 0.0, 0.45, None),
+    "M_Lab04_LedGreen": ((0.05, 0.4, 0.1), 0.3, 0.0, 0.0, (0.2, 3.0, 0.5)),
+    "M_Lab04_LedAmber": ((0.4, 0.2, 0.02), 0.3, 0.0, 0.0, (3.0, 1.2, 0.1)),
+    "M_Lab04_Rubber": ((0.02, 0.02, 0.02), 0.9, 0.0, 0.0, None),
+    "M_Lab04_WatchBezel": ((0.02, 0.025, 0.05), 0.3, 0.5, 0.0, None),
+    "M_Lab04_WatchScreen": ((0.01, 0.03, 0.025), 0.15, 0.0, 0.0, (0.0, 0.05, 0.04)),  # placeholder for the live screen
+}
+RUST = (0.10, 0.045, 0.02)
 PROPS_ROOT = "/Game/Environments/Lab04/Props"
 GRAYBOX = "/Game/Environments/Lab04/Graybox"
 LEVELS = ["/Game/Maps/L_OpeningSlice", "/Game/Maps/L_OpeningSlice_Preview"]
@@ -58,9 +81,62 @@ def textured_material(dest, name, tex, roughness):
     return mat
 
 
+def handmade_material(name, base, rough, metal, rust, emissive):
+    """Constant PBR material; rust breaks up the base colour with world-space noise (no UVs needed)."""
+    path = "%s/%s" % (MATERIALS, name)
+    if unreal.EditorAssetLibrary.does_asset_exist(path):
+        unreal.EditorAssetLibrary.delete_asset(path)
+    m = tools.create_asset(name, MATERIALS, unreal.Material, unreal.MaterialFactoryNew())
+    def const3(c, x, y):
+        e = mel.create_material_expression(m, unreal.MaterialExpressionConstant3Vector, x, y)
+        e.constant = unreal.LinearColor(c[0], c[1], c[2], 1.0)
+        return e
+    def const(v, x, y):
+        e = mel.create_material_expression(m, unreal.MaterialExpressionConstant, x, y)
+        e.r = v
+        return e
+    colour = const3(base, -600, 0)
+    if rust > 0:
+        noise = mel.create_material_expression(m, unreal.MaterialExpressionNoise, -900, 200)
+        # Soft grime: alpha varies smoothly between 0 and the rust amount, never hard spots.
+        noise.set_editor_property("scale", 0.03)
+        noise.set_editor_property("levels", 4)
+        noise.set_editor_property("output_min", 0.0)
+        noise.set_editor_property("output_max", rust)
+        sat = mel.create_material_expression(m, unreal.MaterialExpressionSaturate, -700, 200)
+        mel.connect_material_expressions(noise, "", sat, "")
+        lerp = mel.create_material_expression(m, unreal.MaterialExpressionLinearInterpolate, -400, 0)
+        mel.connect_material_expressions(colour, "", lerp, "A")
+        mel.connect_material_expressions(const3(RUST, -600, 120), "", lerp, "B")
+        mel.connect_material_expressions(sat, "", lerp, "Alpha")
+        mel.connect_material_property(lerp, "", unreal.MaterialProperty.MP_BASE_COLOR)
+        # Rust is rough and not metallic.
+        rl = mel.create_material_expression(m, unreal.MaterialExpressionLinearInterpolate, -400, 300)
+        mel.connect_material_expressions(const(rough, -600, 300), "", rl, "A")
+        mel.connect_material_expressions(const(0.9, -600, 360), "", rl, "B")
+        mel.connect_material_expressions(sat, "", rl, "Alpha")
+        mel.connect_material_property(rl, "", unreal.MaterialProperty.MP_ROUGHNESS)
+        ml = mel.create_material_expression(m, unreal.MaterialExpressionLinearInterpolate, -400, 450)
+        mel.connect_material_expressions(const(metal, -600, 450), "", ml, "A")
+        mel.connect_material_expressions(const(0.0, -600, 510), "", ml, "B")
+        mel.connect_material_expressions(sat, "", ml, "Alpha")
+        mel.connect_material_property(ml, "", unreal.MaterialProperty.MP_METALLIC)
+    else:
+        mel.connect_material_property(colour, "", unreal.MaterialProperty.MP_BASE_COLOR)
+        mel.connect_material_property(const(rough, -600, 300), "", unreal.MaterialProperty.MP_ROUGHNESS)
+        mel.connect_material_property(const(metal, -600, 450), "", unreal.MaterialProperty.MP_METALLIC)
+    if emissive:
+        mel.connect_material_property(const3(emissive, -600, 600), "", unreal.MaterialProperty.MP_EMISSIVE_COLOR)
+    mel.recompile_material(m)
+    unreal.EditorAssetLibrary.save_loaded_asset(m)
+    return m
+
+
 try:
     with open(PLACEMENT) as f:
         placement = json.load(f)
+    with open(HANDMADE) as f:
+        handmade = json.load(f)
 
     # 1. Props.
     meshes = {}
@@ -78,6 +154,27 @@ try:
         b = mesh.get_bounds()
         log("%s extent=(%.1f, %.1f, %.1f) tris=%d" % (mesh_name, b.box_extent.x, b.box_extent.y, b.box_extent.z, mesh.get_num_triangles(0)))
         meshes[mesh_name] = mesh
+
+    # 1b. Hand-modelled meshes with shared materials. The watch is imported but not placed (no first-person arms yet).
+    hm_mats = {n: handmade_material(n, *v) for n, v in HANDMADE_MATERIALS.items()}
+    for mesh_name, p in handmade.items():
+        prop = mesh_name.replace("SM_Lab04_", "")
+        dest = WATCH_DEST if p["location_cm"] is None else "%s/%s" % (PROPS_ROOT, prop)
+        tools.import_asset_tasks([import_task(os.path.join(EXPORT, mesh_name + ".fbx"), dest, mesh_name,
+                                              fbx_options(p["location_cm"] is not None))])
+        mesh = unreal.load_asset("%s/%s" % (dest, mesh_name))
+        for i, slot in enumerate(mesh.get_editor_property("static_materials")):
+            m = hm_mats.get(str(slot.material_slot_name))
+            if m:
+                mesh.set_material(i, m)
+            else:
+                unreal.log_warning("PROPIMPORT %s: no material for slot %s" % (mesh_name, slot.material_slot_name))
+        unreal.EditorAssetLibrary.save_loaded_asset(mesh)
+        b = mesh.get_bounds()
+        log("%s extent=(%.1f, %.1f, %.1f) tris=%d" % (mesh_name, b.box_extent.x, b.box_extent.y, b.box_extent.z, mesh.get_num_triangles(0)))
+        if p["location_cm"] is not None:
+            meshes[mesh_name] = mesh
+            placement[mesh_name] = p
 
     # 2. Graybox static set without the replaced blocks. Slots GB_X keep material M_GB_X; collision stays complex-as-simple.
     static_path = GRAYBOX + "/Meshes/SM_Lab04_Graybox_Static"
