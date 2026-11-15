@@ -21,7 +21,9 @@ public class FortyDaysUnder : ModuleRules
 			"Slate",
 			"SlateCore",
 			"Json",
-			"JsonUtilities"
+			"JsonUtilities",
+			"LevelSequence",
+			"MovieScene"
 		});
 	}
 }

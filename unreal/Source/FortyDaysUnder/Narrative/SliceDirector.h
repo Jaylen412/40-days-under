@@ -51,6 +51,12 @@ public:
 	{
 		return !Beats.IsEmpty() && CurrentIndex >= Beats.Num();
 	}
+	/** Seconds from the start of the slice to the start of this beat if every earlier beat runs to its timeout; -1 if unknown. */
+	UFUNCTION(BlueprintPure, Category = "Narrative")
+	double BeatStartSeconds(FName BeatId) const;
+	/** Sum of every beat's timeout. */
+	UFUNCTION(BlueprintPure, Category = "Narrative")
+	double TotalSeconds() const;
 	UPROPERTY(BlueprintAssignable, Category = "Narrative")
 	FOnSliceBeatStarted OnBeatStarted;
 

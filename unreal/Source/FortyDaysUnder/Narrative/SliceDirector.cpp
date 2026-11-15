@@ -91,6 +91,30 @@ FString USliceDirector::CurrentLine() const
 	return Beats.IsValidIndex(CurrentIndex) ? Beats[CurrentIndex].Line : FString();
 }
 
+double USliceDirector::BeatStartSeconds(FName BeatId) const
+{
+	double Start = 0.0;
+	for (const FSliceBeat& Beat : Beats)
+	{
+		if (Beat.Id == BeatId)
+		{
+			return Start;
+		}
+		Start += Beat.TimeoutSeconds;
+	}
+	return -1.0;
+}
+
+double USliceDirector::TotalSeconds() const
+{
+	double Total = 0.0;
+	for (const FSliceBeat& Beat : Beats)
+	{
+		Total += Beat.TimeoutSeconds;
+	}
+	return Total;
+}
+
 void USliceDirector::StartCurrentBeat()
 {
 	RemainingSeconds = Beats.IsValidIndex(CurrentIndex) ? Beats[CurrentIndex].TimeoutSeconds : 0.0;

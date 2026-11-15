@@ -2,6 +2,7 @@
 #include "Misc/Paths.h"
 #include "Narrative/Act2StateMachine.h"
 #include "Narrative/SliceDirector.h"
+#include "Narrative/SlicePlaybackSync.h"
 #include "UObject/StrongObjectPtr.h"
 #include <limits>
 
@@ -176,6 +177,47 @@ bool FNarrativeSlice::RunTest(const FString &Parameters)
 	D->Tick(1);
 	TestTrue(TEXT("300 seconds"), D->IsFinished());
 	TestEqual(TEXT("finished id"), D->CurrentBeatId(), NAME_None);
+	return true;
+}
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FNarrativeBeatStarts, "FortyDaysUnder.Narrative.BeatStartTimes", NarrativeTest::Flags)
+bool FNarrativeBeatStarts::RunTest(const FString &Parameters)
+{
+	TStrongObjectPtr<USliceDirector> D(NewObject<USliceDirector>());
+	TestEqual(TEXT("empty unknown"), D->BeatStartSeconds("one"), -1.0);
+	TestEqual(TEXT("empty total"), D->TotalSeconds(), 0.0);
+	FString Error;
+	TestTrue(TEXT("load two"), D->LoadFromJsonString(NarrativeTest::TwoBeats, Error));
+	TestEqual(TEXT("first at zero"), D->BeatStartSeconds("one"), 0.0);
+	TestEqual(TEXT("second after first timeout"), D->BeatStartSeconds("two"), 2.0);
+	TestEqual(TEXT("unknown beat"), D->BeatStartSeconds("three"), -1.0);
+	TestEqual(TEXT("total"), D->TotalSeconds(), 5.0);
+	D->NotifyEvent("Go");
+	TestEqual(TEXT("starts are fixed, not elapsed"), D->BeatStartSeconds("two"), 2.0);
+	TestTrue(TEXT("load opening slice"),
+			 D->LoadFromFile(FPaths::ProjectContentDir() / TEXT("Data/Narrative/opening_slice.json"), Error));
+	// These are the section starts in LS_OpeningSlice (seconds x 30 fps).
+	const TPair<FName, double> Expected[] = {{"wake_pump", 0},		 {"read_manifold", 20}, {"check_watch", 55},
+											 {"log_stock", 80},		 {"telemetry_fault", 110}, {"clear_fault", 140},
+											 {"valve_stuck", 180},	 {"crank_valve", 205},	{"dome_look", 250},
+											 {"log_close", 280}};
+	for (const TPair<FName, double> &E : Expected)
+	{
+		TestEqual(*E.Key.ToString(), D->BeatStartSeconds(E.Key), E.Value);
+	}
+	TestEqual(TEXT("slice total"), D->TotalSeconds(), 300.0);
+	return true;
+}
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FNarrativeSliceSync, "FortyDaysUnder.Narrative.SliceSync", NarrativeTest::Flags)
+bool FNarrativeSliceSync::RunTest(const FString &Parameters)
+{
+	TestFalse(TEXT("timeout rollover stays put"), FSlicePlaybackSync::NeedsJump(20.03, 20.0, 0.25));
+	TestFalse(TEXT("a frame early stays put"), FSlicePlaybackSync::NeedsJump(19.97, 20.0, 0.25));
+	TestTrue(TEXT("early event jumps ahead"), FSlicePlaybackSync::NeedsJump(6.0, 20.0, 0.25));
+	TestTrue(TEXT("sequence ahead jumps back"), FSlicePlaybackSync::NeedsJump(21.0, 20.0, 0.25));
+	TestFalse(TEXT("first beat at rest"), FSlicePlaybackSync::NeedsJump(0.0, 0.0, 0.25));
+	TestFalse(TEXT("unknown beat never jumps"), FSlicePlaybackSync::NeedsJump(6.0, -1.0, 0.25));
+	TestFalse(TEXT("nan ignored"), FSlicePlaybackSync::NeedsJump(std::numeric_limits<double>::quiet_NaN(), 20.0, 0.25));
+	TestTrue(TEXT("negative tolerance treated as zero"), FSlicePlaybackSync::NeedsJump(20.01, 20.0, -1.0));
 	return true;
 }
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FNarrativeDeath, "FortyDaysUnder.Narrative.DeathFromAnyState", NarrativeTest::Flags)
