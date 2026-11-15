@@ -22,6 +22,12 @@ look and the 3D sources.
   `IntroFootage > bEnabled` on the level's `OpeningSliceDirector`. This also applies in `L_OpeningSlice_Preview`.
 - Packaging: `Config/DefaultGame.ini` stages `Content/Data` and `Content/Movies` as loose files.
 
+## Progress (2026-11-15)
+
+- Step 2 done: layout sheet `assets/hf_20261115_101346_1e5964b6-….png`.
+- Step 3 proven on the valve wheel: still, then `sam_3_3d`, then `blender/props/build_valve_wheel.py`, then
+  `unreal/Scripts/import_valve_wheel.py`. It's in `L_OpeningSlice`. Cost: 3 credits in total for the layout sheet, the still and the 3D lift.
+
 ## To build the game in the Higgsfield look
 
 1. **Finish and lock the footage.** Generate the 6 missing clips (06 part 2 through 10) before the free
