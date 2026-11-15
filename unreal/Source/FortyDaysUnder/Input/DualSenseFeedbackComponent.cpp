@@ -241,7 +241,9 @@ void UDualSenseFeedbackComponent::UpdatePumpHaptic(float DeltaTime)
 	APlayerController* Controller = World ? World->GetFirstPlayerController() : nullptr;
 	const FDualSenseDeviceRoute Route = ResolveDevice(Controller);
 	// PlayerController haptics use a legacy index, with the viewport multiplayer offset.
-	int32 HapticIndex = Controller ? Controller->GetInputIndex() : INDEX_NONE;
+	// APlayerController::GetInputIndex() is protected; this is the same lookup it performs.
+	const ULocalPlayer* HapticPlayer = Controller ? Controller->GetLocalPlayer() : nullptr;
+	int32 HapticIndex = HapticPlayer ? HapticPlayer->GetControllerId() : INDEX_NONE;
 	if (World && World->GetGameInstance() && World->GetGameInstance()->GetNumLocalPlayers() > 1
 		&& GetDefault<UGameMapsSettings>()->bOffsetPlayerGamepadIds)
 	{

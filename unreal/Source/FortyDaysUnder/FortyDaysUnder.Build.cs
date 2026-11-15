@@ -14,6 +14,7 @@ public class FortyDaysUnder : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"EngineSettings",
 			"InputCore",
 			"EnhancedInput",
 			"ApplicationCore",
