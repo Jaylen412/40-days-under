@@ -4,7 +4,22 @@ Purpose: turn the graybox blocking of the ten opening beats into realistic foota
 `frames/` are composition and pose references only (box stand-in, flat-colour set). Identity, costume
 and environment come from the locked anchors below, not from these stills.
 
-Nothing has been sent to Higgsfield from this folder yet.
+Sent 2026-11-14: the eleven stills were uploaded to the Higgsfield media library as image inputs
+(IDs below). No generation has been run, no credits were spent, and this README itself was not uploaded.
+
+| Still | Higgsfield media ID |
+| :--- | :--- |
+| `01a_wake_pump_lying.jpg` | `0646efe4-15eb-45b2-9790-58264de34f8a` |
+| `01b_wake_pump_sitting.jpg` | `61bdadad-78b3-451f-adca-158b3e096104` |
+| `02_read_manifold.jpg` | `7914ffd6-58a9-44a0-b8f6-650e7e1d1092` |
+| `03_check_watch.jpg` | `7bd7a4a9-45a4-47e1-b96d-102d58d89bf4` |
+| `04_log_stock.jpg` | `c9450421-eb13-42ce-9c0a-42037705b676` |
+| `05_telemetry_fault.jpg` | `f50490b9-5147-4808-8394-333588c9bf9d` |
+| `06_clear_fault.jpg` | `c4333b7a-fbe3-40e9-8cb2-eb743c27c309` |
+| `07_valve_stuck.jpg` | `2b847c2b-e3bd-49df-8361-e1bb092f3da5` |
+| `08_crank_valve.jpg` | `be3782b7-a3b0-4be1-9f65-c15973d123bb` |
+| `09_dome_look.jpg` | `b715e47c-7777-41e4-9ba2-beb9d0c1eaa3` |
+| `10_log_close.jpg` | `954cd1f8-419e-4cd1-8dc5-273d4ae06c42` |
 
 ## Locked anchors (from `PROJECT_MEMORY.md` section 1)
 
