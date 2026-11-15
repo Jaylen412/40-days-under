@@ -2,8 +2,8 @@ project: "40 Days Under"
 engine: "Unreal Engine 5.8 (C++20)"
 dcc_tool: "Blender 4.x"
 mcp_servers: ["higgsfield", "filesystem"]
-last_updated_by: "Codex — Orchestrator"
-timestamp: "2026-11-14T18:06:25Z"
+last_updated_by: "Claude Code"
+timestamp: "2026-11-15T00:45:00Z"
 
 # PROJECT_MEMORY.md — Single Source of Truth
 
@@ -36,7 +36,8 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
 - `[ACTIVE]` `FVitalsSnapshot`: Blueprint-readable contract for consumers.
 - `[ACTIVE]` `USurvivalClockSubsystem`, `USurvivalVitalsComponent`: fixed-minute clock, model ownership, decompression cycle and death notification.
 - `[ACTIVE]` `AUnderwaterCharacter`, `UUnderwaterMovementComponent`, `AFortyDaysGameMode`: dry-lab walking, submerged movement/current/buoyancy, camera selection, survival-driven movement and input latency.
-- `[ACTIVE]` `FDualSenseFeedbackProfile`, `UDualSenseFeedbackComponent`: trigger/lightbar/pump feedback; device-gating review pending. `SonyPadHooks.h` is a stub.
+- `[ACTIVE]` `FDualSenseFeedbackProfile`, `UDualSenseFeedbackComponent`, `FDualSenseDeviceRoute`: trigger/lightbar/pump feedback and device-routing filter. `SonyPadHooks.h` is a stub.
+- `[ACTIVE]` `UAct2StateMachine`, `USliceDirector`: Act 2 branching choices, siege countdown, prep tasks, and JSON-driven Day 1 opening slice playback.
 
 ## 3. Blender-to-UE5 Asset Pipeline Status
 
@@ -47,9 +48,29 @@ Local copies live in `assets/`. IDs are Higgsfield job IDs.
 | `PROP_ROV_Scout` | Tethered Inspection ROV | `8.4` | `[ ]` | `[ ]` | `[ ]` | `NOT_STARTED` |
 | `ENV_RiverWalk_Dock` | Detroit RiverWalk Marina | `8.5` | `[ ]` | `[ ]` | `[ ]` | `NOT_STARTED` |
 
+### Opening-slice animation source (Blender)
+
+- `[ACTIVE]` **DEC-008:** `blender/starting-animation.blend` is the export source for the Day 1 slice animation, not previs only (user decision, 2026-11-14). Blender 5.3, 30 fps, frames 1-9000 = 300 s, one timeline marker per beat named `NN_<beat id>` to match `opening_slice.json`, each bound to camera `CAM_NN_<beat id>`.
+- `[ACTIVE]` **DEC-009 (verified in UE 5.8):** character animation is authored on the stock Manny skeleton exactly as Blender imports it from a UE FBX export: armature object named `root` (it becomes the UE `root` bone; do not rename it), object scale 0.01, bones in cm, rest pose facing Blender -Y. Locomotion is keyed on that object. Export with Blender FBX defaults Forward `-Z`, Up `Y`, Apply Scalings `All Local`, Add Leaf Bones off, Only Deform Bones off, armature only, Bake Animation on. Mapping is Blender (x, y, z) m to UE (100x, -100y, 100z) cm. Proof: `A_Christian_Slice_01_wake_pump.fbx` imported onto `SK_Mannequin` in a scratch project gave 599 frames, root scale 1.0, no added bones, and root/pelvis/head/hand_l positions equal to Blender at frames 0, 299, 598. This supersedes the unproven "author facing +X, Forward X / Up Z" starting value in `docs/Art/FbxExportChecklist.md` for animation on the Manny skeleton.
+- Collections: `SET_Lab04_Graybox` (`GB_` graybox, not export assets), `CHR_Christian_Rig` (`root` armature with 88 Manny bones, box stand-in `CHR_Christian_Proxy`), `CAM_Shots`, `LGT_Blocking`, `FX_DomeSilhouettes`. Default startup `Collection` is excluded from the view layer, not deleted.
+- Exports: `blender/export/A_Christian_Slice_NN_<beat id>.fbx`, one per beat, armature animation only. Plus `SK_Christian_Proxy.fbx` (stand-in mesh on the Manny skeleton, rest pose).
+- `[ACTIVE]` Imported into the game project (2026-11-14, headless, refinement pass 1): `unreal/Content/Characters/Christian/Meshes/SK_Christian_Proxy` and `SKEL_Christian_Proxy` (own skeleton, Manny hierarchy, 180.6 cm tall bounds), and `unreal/Content/Characters/Christian/Animations/A_Christian_Slice_01..10_<beat id>`. For every beat the first and last frame root and pelvis positions in UE equal Blender under the DEC-009 mapping. Frame counts are beat seconds x 30 minus 1. The assets are not referenced by any level, Blueprint or `USliceDirector` yet, and have not been viewed in the editor viewport. This is a placeholder, so the `CHR_Christian_01` row in section 3 stays `NOT_STARTED`.
+- Known gaps: the stand-in has Manny proportions (1.805 m), not Christian's 1.7526 m, until `SKEL_Christian` exists; first refinement pass only (see below); prop animation (valve wheel, needles, fault lamp), cameras and set are not exported; cot and station layout are placeholder calls, not from concept 8.3; no audio. UE logs "invalid bind poses" on import because the FBX carries no mesh.
+- Refinement pass 1 (2026-11-14): root stays on the deck and the `pelvis` bone carries lying, sitting, crouching and stride bob. Wake is lie, listen, sit up, rub face, stand. Walks are four-phase steps at 1.25 m/s. Added gauge tap, watch button presses, counting gestures at the log, two-handed bus reseat then lamp reset, failed valve attempts with a step back, braced ratchet cranking that speeds up (wheel ends at about 403 degrees), a half step back under the dome, a last glance up at the close, and breathing on `spine_03`. All ten FBX files were re-exported after this pass; the UE import test predates it and was not repeated.
+- Still rough: forward kinematics only, so feet are not planted (up to 3 cm through the deck at walk starts, 2 to 4 cm of float at contact); hands do not lock to props; the log recorder stays on the bench when he "lifts" it; no fingers or face.
+- The Manny reference FBX was exported from the engine templates into a temp folder and is not in the repo. To regenerate: copy `Templates/TemplateResources/High/Characters/Content/Mannequins` into a blank project and export `SKM_Manny_Simple` with `SkeletalMeshExporterFBX` from an editor session (the `pythonscript` commandlet and `-nullrhi` both assert in `SkinnedMeshComponent`; use `-ExecCmds="py <script>"` with `-RenderOffscreen` and quit from the script).
+
 ## 4. Sub-Agent Handoff Queue (Pick Up Here Next)
 
-- **Verified prior work:** Tasks 0, 1, 2, 5 and 6 are committed on `first-pass`. The former instruction to start Task 1 was stale. Survival models/clock/vitals, underwater movement/character/game mode, narrative documents/data and art production documents exist. Task 3 feedback implementation is at `c2df65b`, with its final device-support review still open.
-- **In progress:** Task 4 Act 2 state machine and opening-slice director; Task 3 device gating review. Only the Task 4 implementer may run Unreal build/tests until it releases the build slot.
-- **Known limitations:** no authored Lab 04 level or Blender assets; no authored haptic WAVs; Sony controller-speaker hooks require PS5 SDK; real controller feel has not been verified.
-- **Next:** finish Task 4 and resolve Task 3 review, then Task 7 clean build/full automation suite and final memory update. Detailed prior ledger: `.superpowers/sdd/2026-11-14-first-pass/progress.md` (git-ignored).
+- **Verified prior work:** Tasks 0 through 6 of the First Pass plan are committed on branch `first-pass`.
+  - Task 0: Project memory files (`PROJECT_MEMORY.md`, `CLAUDE.md`, `AGENTS.md`).
+  - Task 1: Survival simulation models, clock subsystem, and vitals component (`240aa76`).
+  - Task 2: Underwater character, movement component, and game mode (`ab645ed`, `dec7c73`).
+  - Task 3: DualSense feedback layer, device-routing filter, and tests (`5c55737`, `c2df65b`, `76a4884`).
+  - Task 4: Act 2 state machine, opening-slice director, and tests (`51d04af`).
+  - Task 5: Narrative world bible, opening slice script, Act 2 branches, and `opening_slice.json` (`7e9f201`).
+  - Task 6: Art production sheet and FBX export checklist (`8fb6530`).
+- **Task 7 status (2026-11-14):** the editor target did not build at `76a4884`. Two fixes, uncommitted: `DualSenseFeedbackComponent.cpp` called the protected `APlayerController::GetInputIndex()` (now `GetLocalPlayer()->GetControllerId()`, the same lookup), and `FortyDaysUnder.Build.cs` lacked `EngineSettings` for `UGameMapsSettings`. After them an incremental build succeeds and all 33 `FortyDaysUnder.*` tests log `Result={Success}`, none `Fail`. A from-scratch clean build was not run.
+- **Known limitations:** No authored Lab 04 3D level or Blender assets; no authored haptic WAVs; Sony controller-speaker hooks require PS5 SDK; real controller feel has not been verified on hardware.
+- **Animation next step:** play `A_Christian_Slice_*` on `SK_Christian_Proxy` in the editor to judge them in motion, then either wire them to `USliceDirector` beats or continue refining in Blender (foot and hand IK, recorder pickup) and re-import.
+- **Next immediate step:** commit the two build fixes, then the next phase: authoring the graybox Lab 04 level, placing `AUnderwaterCharacter`, and implementing `AROVCompanionPawn`. Detailed prior ledger: `.superpowers/sdd/2026-11-14-first-pass/progress.md` (git-ignored).
