@@ -1,0 +1,62 @@
+{
+  "SM_Lab04_Cot": {
+    "location_cm": [
+      -195.02,
+      278.51,
+      0.0
+    ],
+    "yaw_deg": 35.0,
+    "replaces": "GB_Lab04_Cot",
+    "size_m": [
+      1.95,
+      0.85,
+      0.55
+    ],
+    "tris": 11264
+  },
+  "SM_Lab04_Bench": {
+    "location_cm": [
+      187.5,
+      324.76,
+      0.0
+    ],
+    "yaw_deg": 150.0,
+    "replaces": "GB_Lab04_Bench_Lab",
+    "size_m": [
+      2.0,
+      0.8,
+      0.9
+    ],
+    "tris": 10590
+  },
+  "SM_Lab04_LogRecorder": {
+    "location_cm": [
+      192.32,
+      293.11,
+      90.0
+    ],
+    "yaw_deg": 60.0,
+    "replaces": "GB_LogRecorder",
+    "size_m": [
+      0.071,
+      0.14,
+      0.037
+    ],
+    "tris": 11156
+  },
+  "SM_Lab04_AirScrubber": {
+    "location_cm": [
+      -237.03,
+      -303.38,
+      0.0
+    ],
+    "yaw_deg": -38.0,
+    "replaces": "GB_Lab04_AirScrubber_Unit",
+    "size_m": [
+      1.178,
+      0.988,
+      2.2
+    ],
+    "tris": 17071
+  }
+}

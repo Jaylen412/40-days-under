@@ -1,13 +1,19 @@
-"""Render the intake valve in L_OpeningSlice with a SceneCapture2D (works with -RenderOffscreen).
+"""Render Lab 04 props in L_OpeningSlice with a SceneCapture2D (works with -RenderOffscreen).
 
-Writes Saved/Screenshots/valve_check_<view>.png, then quits. Nothing is saved to the level.
+Writes Saved/Screenshots/lab04_<view>.png for each view below, then quits. Nothing is saved to the level.
 """
 import unreal
 DIR = unreal.Paths.convert_relative_path_to_full(unreal.Paths.project_saved_dir()) + "Screenshots/"
 world = unreal.EditorLoadingAndSavingUtils.load_map("/Game/Maps/L_OpeningSlice")
 sub = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
-target = unreal.Vector(-400, 0, 120)
-views = [("near", unreal.Vector(-280, 60, 160)), ("wide", unreal.Vector(-40, 180, 175))]
+# (name, camera location, look-at target), UE centimetres, eye height ~165.
+views = [
+    ("valve", unreal.Vector(-280, 60, 160), unreal.Vector(-400, 0, 120)),
+    ("cot", unreal.Vector(20, 90, 170), unreal.Vector(-195, 278, 30)),
+    ("bench", unreal.Vector(40, 110, 165), unreal.Vector(187, 325, 80)),
+    ("recorder", unreal.Vector(150, 225, 145), unreal.Vector(192, 293, 92)),
+    ("scrubber", unreal.Vector(-20, -60, 165), unreal.Vector(-237, -303, 100)),
+]
 rt = unreal.RenderingLibrary.create_render_target2d(world, 1280, 720, unreal.TextureRenderTargetFormat.RTF_RGBA8_SRGB)
 cap = sub.spawn_actor_from_class(unreal.SceneCapture2D, views[0][1])
 comp = cap.capture_component2d
@@ -20,13 +26,13 @@ def tick(dt):
     state["frame"] += 1
     f, i = state["frame"], state["i"]
     if i < len(views):
-        name, loc = views[i]
+        name, loc, target = views[i]
         if f % 150 == 1:
             cap.set_actor_location_and_rotation(loc, unreal.MathLibrary.find_look_at_rotation(loc, target), False, False)
         elif f % 150 in (60, 90, 120):
             comp.capture_scene()   # repeat so Lumen and exposure settle
         elif f % 150 == 140:
-            unreal.RenderingLibrary.export_render_target(world, rt, DIR, "valve_check_%s.png" % name)
+            unreal.RenderingLibrary.export_render_target(world, rt, DIR, "lab04_%s.png" % name)
             log("wrote " + name)
             state["i"] += 1
     elif f > 150 * len(views) + 30:

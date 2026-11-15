@@ -27,6 +27,10 @@ look and the 3D sources.
 - Step 2 done: layout sheet `assets/hf_20261115_101346_1e5964b6-….png`.
 - Step 3 proven on the valve wheel: still, then `sam_3_3d`, then `blender/props/build_valve_wheel.py`, then
   `unreal/Scripts/import_valve_wheel.py`. It's in `L_OpeningSlice`. Cost: 3 credits in total for the layout sheet, the still and the 3D lift.
+- Cot, bench, log recorder and air scrubber done the cheaper way: one prop sheet image with all four, then a
+  SAM 3D lift per prop picked out by text prompt (5 credits for the four). Scripts:
+  `blender/props/build_lab04_props.py`, then `unreal/Scripts/import_lab04_props.py`. They're placed in both opening-slice levels.
+- The manifold, telemetry panel and watch are modelled by hand (DEC-013), because their gauges, lamp and screen are live.
 
 ## To build the game in the Higgsfield look
 
