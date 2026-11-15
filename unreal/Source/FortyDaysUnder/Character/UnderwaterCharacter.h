@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Character/ViewmodelArm.h"
 #include "Simulation/VitalsSnapshot.h"
 #include "UnderwaterCharacter.generated.h"
 
@@ -11,6 +12,8 @@ class USurvivalVitalsComponent;
 class UInputAction;
 class UInputMappingContext;
 class USliceInteractorComponent;
+class UStaticMeshComponent;
+class UTextRenderComponent;
 struct FInputActionValue;
 
 UCLASS()
@@ -35,6 +38,30 @@ public:
 
 	/** Opening-slice interactions: view trace plus Interact / Watch input. */
 	UPROPERTY(VisibleAnywhere) TObjectPtr<USliceInteractorComponent> Interactor;
+
+	/**
+	 * First-person forearms (owner-only, no shadows), parented to the first-person camera. They rest below the
+	 * view; holding Watch raises the left wrist to the face, holding Interact reaches the right hand forward.
+	 */
+	UPROPERTY(VisibleAnywhere, Category="FirstPerson") TObjectPtr<UStaticMeshComponent> ArmLeft;
+	UPROPERTY(VisibleAnywhere, Category="FirstPerson") TObjectPtr<UStaticMeshComponent> ArmRight;
+	/** Dive watch on the left forearm; its screen shows FWatchDisplay lines as in-world text (no HUD). */
+	UPROPERTY(VisibleAnywhere, Category="FirstPerson") TObjectPtr<UStaticMeshComponent> Watch;
+	UPROPERTY(VisibleAnywhere, Category="FirstPerson") TArray<TObjectPtr<UTextRenderComponent>> WatchLines;
+
+	/** Arm poses relative to the first-person camera (cm). Rest poses sit below the view. */
+	UPROPERTY(EditAnywhere, Category="FirstPerson") FTransform ArmLeftRest;
+	UPROPERTY(EditAnywhere, Category="FirstPerson") FTransform ArmLeftRaised;
+	UPROPERTY(EditAnywhere, Category="FirstPerson") FTransform ArmRightRest;
+	UPROPERTY(EditAnywhere, Category="FirstPerson") FTransform ArmRightRaised;
+
+	/** Current raise progress of each arm, 0..1 (for tests and tuning). */
+	double GetArmLeftAlpha() const { return LeftArm.Alpha; }
+	double GetArmRightAlpha() const { return RightArm.Alpha; }
+	/** Advance the arms; called from Tick, public so tests and editor scripts can drive it without play. */
+	UFUNCTION(BlueprintCallable, Category="FirstPerson") void UpdateViewmodel(float DeltaSeconds);
+	/** Refresh the watch screen text from the vitals snapshot. */
+	UFUNCTION(BlueprintCallable, Category="FirstPerson") void RefreshWatch();
 
 	UFUNCTION(BlueprintCallable) void SetCameraBlend(float Alpha);     // 0 first person, 1 third person
 	UFUNCTION(BlueprintCallable) float GetInputLatencySeconds() const; // 0.25 x DcsSeverity
@@ -85,4 +112,10 @@ private:
 
 	TArray<FDelayedInput> InputQueue;
 	float CameraBlend = 0.0f;
+
+	FViewmodelArm LeftArm;
+	FViewmodelArm RightArm;
+	bool bWatchHeld = false;
+	bool bInteractHeld = false;
+	double WatchRefreshTimer = 0.0;
 };

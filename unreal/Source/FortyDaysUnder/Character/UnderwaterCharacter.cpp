@@ -1,6 +1,11 @@
 #include "Character/UnderwaterCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Character/WatchDisplay.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/TextRenderComponent.h"
+#include "Engine/StaticMesh.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Character/UnderwaterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
@@ -19,6 +24,23 @@ namespace
 {
 	constexpr double LabDepthMetres = 15.0;
 	constexpr float MaxLatencySeconds = 0.25f;
+
+	// Must match blender/props/build_fp_arms.py (WATCH_UE) and build_lab04_handmade.py (watch case).
+	const FVector WatchOnForearmCm(22.5, 0.0, 2.85);
+	constexpr float WatchYawOnForearm = 0.0f;     // crown toward the hand, 12 o'clock away from the thumb
+	constexpr float WatchScreenHeightCm = 1.37f;   // case 1.3 cm + screen
+	constexpr float WatchLineSpacingCm = 0.55f;
+	constexpr double WatchRefreshSeconds = 0.25;
+	const FVector ViewmodelRestDrop(0.0, 0.0, -45.0);
+
+	void MakeViewmodel(UStaticMeshComponent* C)
+	{
+		C->SetOnlyOwnerSee(true);
+		C->SetCastShadow(false);
+		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		C->SetCanEverAffectNavigation(false);
+		C->SetVisibility(false);
+	}
 }
 
 AUnderwaterCharacter::AUnderwaterCharacter(const FObjectInitializer& ObjectInitializer)
@@ -46,6 +68,59 @@ AUnderwaterCharacter::AUnderwaterCharacter(const FObjectInitializer& ObjectIniti
 	ThirdPersonCamera->SetAutoActivate(false);
 
 	Interactor = CreateDefaultSubobject<USliceInteractorComponent>(TEXT("Interactor"));
+
+	// First-person forearms and the dive watch (meshes from build_fp_arms.py / build_lab04_handmade.py).
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> ArmLMesh(TEXT("/Game/Characters/Christian/FirstPerson/SM_FP_Forearm_L.SM_FP_Forearm_L"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> ArmRMesh(TEXT("/Game/Characters/Christian/FirstPerson/SM_FP_Forearm_R.SM_FP_Forearm_R"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> WatchMesh(TEXT("/Game/Characters/Christian/Watch/SM_Lab04_DiveWatch.SM_Lab04_DiveWatch"));
+
+	ArmLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ArmLeft"));
+	ArmLeft->SetupAttachment(FirstPersonCamera);
+	ArmLeft->SetStaticMesh(ArmLMesh.Object);
+	MakeViewmodel(ArmLeft);
+	ArmRight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ArmRight"));
+	ArmRight->SetupAttachment(FirstPersonCamera);
+	ArmRight->SetStaticMesh(ArmRMesh.Object);
+	MakeViewmodel(ArmRight);
+
+	Watch = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Watch"));
+	Watch->SetupAttachment(ArmLeft);
+	Watch->SetStaticMesh(WatchMesh.Object);
+	Watch->SetRelativeLocationAndRotation(WatchOnForearmCm, FRotator(0.0f, WatchYawOnForearm, 0.0f));
+	MakeViewmodel(Watch);
+	Watch->SetVisibility(true);   // follows the arm's visibility through the parent
+
+	for (int32 i = 0; i < FWatchDisplay::NumLines; ++i)
+	{
+		UTextRenderComponent* Line = CreateDefaultSubobject<UTextRenderComponent>(*FString::Printf(TEXT("WatchLine%d"), i));
+		Line->SetupAttachment(Watch);
+		// Text faces up out of the screen, reading upright with 12 o'clock (watch -Y) at the top.
+		Line->SetRelativeLocationAndRotation(FVector(0.0f, (i - 1) * WatchLineSpacingCm, WatchScreenHeightCm),
+			FRotator(90.0f, 90.0f, 0.0f));
+		Line->SetHorizontalAlignment(EHTA_Center);
+		Line->SetVerticalAlignment(EVRTA_TextCenter);
+		Line->SetWorldSize(0.42f);
+		Line->SetTextRenderColor(FColor(110, 255, 210));
+		Line->SetOnlyOwnerSee(true);
+		Line->SetCastShadow(false);
+		Line->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		WatchLines.Add(Line);
+	}
+
+	// Left: forearm across the chest pointing right, back of the wrist turned up to the eye.
+	const FVector LeftForearm(0.25, 0.95, 0.15);
+	const FVector LeftBack(-1.0, 0.0, 0.35);
+	const FVector WatchTarget(30.0, -2.0, -9.0);
+	const FTransform LeftRaised = FViewmodelArm::Pose(FVector::ZeroVector, LeftForearm, LeftBack);
+	ArmLeftRaised = FViewmodelArm::Pose(WatchTarget - LeftRaised.TransformVector(WatchOnForearmCm), LeftForearm, LeftBack);
+	ArmLeftRest = ArmLeftRaised;
+	ArmLeftRest.AddToTranslation(ViewmodelRestDrop + FVector(0.0, -15.0, 0.0));
+	// Right: reaching forward and slightly up from the lower right, back of the hand up.
+	ArmRightRaised = FViewmodelArm::Pose(FVector(8.0, 18.0, -32.0), FVector(0.9, -0.12, 0.42), FVector(-0.3, 0.0, 1.0));
+	ArmRightRest = ArmRightRaised;
+	ArmRightRest.AddToTranslation(ViewmodelRestDrop + FVector(0.0, 12.0, 0.0));
+	ArmLeft->SetRelativeTransform(ArmLeftRest);
+	ArmRight->SetRelativeTransform(ArmRightRest);
 }
 
 void AUnderwaterCharacter::BeginPlay()
@@ -54,6 +129,27 @@ void AUnderwaterCharacter::BeginPlay()
 
 	SetInsidePressurisedLab(bInsidePressurisedLab);
 	SetCameraBlend(CameraBlend);
+	RefreshWatch();
+}
+
+void AUnderwaterCharacter::UpdateViewmodel(float DeltaSeconds)
+{
+	const bool bFirstPerson = CameraBlend < 0.5f;
+	LeftArm.Update(DeltaSeconds, bWatchHeld && bFirstPerson);
+	RightArm.Update(DeltaSeconds, bInteractHeld && bFirstPerson);
+	ArmLeft->SetRelativeTransform(FViewmodelArm::Blend(ArmLeftRest, ArmLeftRaised, LeftArm.Eased()));
+	ArmRight->SetRelativeTransform(FViewmodelArm::Blend(ArmRightRest, ArmRightRaised, RightArm.Eased()));
+	ArmLeft->SetVisibility(LeftArm.IsVisible(), true);
+	ArmRight->SetVisibility(RightArm.IsVisible(), true);
+}
+
+void AUnderwaterCharacter::RefreshWatch()
+{
+	const TArray<FString> Lines = FWatchDisplay::Lines(Vitals->GetSnapshot());
+	for (int32 i = 0; i < WatchLines.Num() && i < Lines.Num(); ++i)
+	{
+		WatchLines[i]->SetText(FText::FromString(Lines[i]));
+	}
 }
 
 void AUnderwaterCharacter::SetInsidePressurisedLab(bool bInside)
@@ -134,6 +230,14 @@ void AUnderwaterCharacter::Tick(float DeltaSeconds)
 		++Released;
 	}
 	InputQueue.RemoveAt(0, Released, EAllowShrinking::No);
+
+	UpdateViewmodel(DeltaSeconds);
+	WatchRefreshTimer -= DeltaSeconds;
+	if (LeftArm.IsVisible() && WatchRefreshTimer <= 0.0)
+	{
+		RefreshWatch();
+		WatchRefreshTimer = WatchRefreshSeconds;
+	}
 }
 
 void AUnderwaterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -246,9 +350,9 @@ void AUnderwaterCharacter::EnsureDefaultInput()
 	Map(Interact, EKeys::E);
 	Map(Interact, EKeys::LeftMouseButton);
 	Map(Interact, EKeys::Gamepad_FaceButton_Bottom);
-	UInputAction* Watch = Default(WatchAction, TEXT("IA_Default_Watch"), EInputActionValueType::Boolean);
-	Map(Watch, EKeys::Q);
-	Map(Watch, EKeys::Gamepad_FaceButton_Top);
+	UInputAction* WatchInput = Default(WatchAction, TEXT("IA_Default_Watch"), EInputActionValueType::Boolean);
+	Map(WatchInput, EKeys::Q);
+	Map(WatchInput, EKeys::Gamepad_FaceButton_Top);
 }
 
 void AUnderwaterCharacter::PawnClientRestart()
@@ -266,10 +370,10 @@ void AUnderwaterCharacter::PawnClientRestart()
 	}
 }
 
-void AUnderwaterCharacter::OnInteractStarted() { Interactor->SetInputHeld(ESliceInput::Interact, true); }
-void AUnderwaterCharacter::OnInteractCompleted() { Interactor->SetInputHeld(ESliceInput::Interact, false); }
-void AUnderwaterCharacter::OnWatchStarted() { Interactor->SetInputHeld(ESliceInput::Watch, true); }
-void AUnderwaterCharacter::OnWatchCompleted() { Interactor->SetInputHeld(ESliceInput::Watch, false); }
+void AUnderwaterCharacter::OnInteractStarted() { bInteractHeld = true; Interactor->SetInputHeld(ESliceInput::Interact, true); }
+void AUnderwaterCharacter::OnInteractCompleted() { bInteractHeld = false; Interactor->SetInputHeld(ESliceInput::Interact, false); }
+void AUnderwaterCharacter::OnWatchStarted() { bWatchHeld = true; WatchRefreshTimer = 0.0; Interactor->SetInputHeld(ESliceInput::Watch, true); }
+void AUnderwaterCharacter::OnWatchCompleted() { bWatchHeld = false; Interactor->SetInputHeld(ESliceInput::Watch, false); }
 
 void AUnderwaterCharacter::OnMove(const FInputActionValue& Value) { Enqueue(Value.Get<FVector2D>(), FVector2D::ZeroVector, 0.0f); }
 void AUnderwaterCharacter::OnLook(const FInputActionValue& Value) { Enqueue(FVector2D::ZeroVector, Value.Get<FVector2D>(), 0.0f); }

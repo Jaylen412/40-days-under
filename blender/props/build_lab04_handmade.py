@@ -7,7 +7,7 @@ The meshes are built around the live actors that stay in the level:
              gauge faces sit at y 4.15 m and nothing else is in front of a face inside radius 0.17 m.
   telemetry  the fault lamp actors (12 cm spheres) sit at local (-0.15, 0.30, 1.80) m, front = local -X;
              the rack gives them a caged housing. The bus tray is modelled here (it never moved).
-  watch      not placed: the player has no first-person arms yet. Pivot at the underside of the case,
+  watch      worn on SM_FP_Forearm_L (build_fp_arms.py), which carries the strap. Pivot at the underside of the case,
              face up (+Z), 12 o'clock on +Y. The screen is its own slot (M_Lab04_WatchScreen) for a live material.
 Materials are slot names only; import_lab04_props.py builds them in UE.
 
@@ -194,10 +194,9 @@ cyl("M_Lab04_WatchScreen", (0, 0, CASE_H + 0.0003), CASE_R - 0.0042, 0.0006, 'Z'
 for y, l in ((0.004, 0.0045), (-0.004, 0.0045)):
     cyl("M_Lab04_BareSteel", (CASE_R + 0.002, y * 2.0, CASE_H * 0.55), 0.0018, l, 'X', 12)  # pushers (presses x2)
 cyl("M_Lab04_BareSteel", (CASE_R + 0.0025, 0, CASE_H * 0.5), 0.0026, 0.005, 'X', 16)    # crown
-for s in (1, -1):                                                                       # lugs and strap stubs
+for s in (1, -1):                                                                       # lugs (the strap is on the arm mesh)
     for x in (-0.009, 0.009):
         box("M_Lab04_BareSteel", (x, s * (CASE_R + 0.002), CASE_H * 0.45), (0.004, 0.008, 0.006), bevel=0.0008)
-    box("M_Lab04_Rubber", (0, s * (CASE_R + 0.022), CASE_H * 0.35), (0.020, 0.040, 0.004), bevel=0.001)
 watch = build("SM_Lab04_DiveWatch")
 
 placement = {

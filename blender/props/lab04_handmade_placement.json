@@ -66,24 +66,23 @@
     "location_cm": null,
     "yaw_deg": null,
     "replaces": null,
-    "tris": 2084,
+    "tris": 1868,
     "bounds_m": [
       [
         -0.022,
-        -0.063,
+        -0.027,
         0.0
       ],
       [
         0.026,
-        0.063,
+        0.027,
         0.015
       ]
     ],
     "slots": [
       "M_Lab04_BareSteel",
       "M_Lab04_WatchBezel",
-      "M_Lab04_WatchScreen",
-      "M_Lab04_Rubber"
+      "M_Lab04_WatchScreen"
     ]
   }
 }

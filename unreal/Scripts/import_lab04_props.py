@@ -35,7 +35,6 @@ HANDMADE_MATERIALS = {
     "M_Lab04_LedAmber": ((0.4, 0.2, 0.02), 0.3, 0.0, 0.0, (3.0, 1.2, 0.1)),
     "M_Lab04_Rubber": ((0.02, 0.02, 0.02), 0.9, 0.0, 0.0, None),
     "M_Lab04_WatchBezel": ((0.02, 0.025, 0.05), 0.3, 0.5, 0.0, None),
-    "M_Lab04_WatchScreen": ((0.01, 0.03, 0.025), 0.15, 0.0, 0.0, (0.0, 0.05, 0.04)),  # placeholder for the live screen
 }
 RUST = (0.10, 0.045, 0.02)
 PROPS_ROOT = "/Game/Environments/Lab04/Props"
