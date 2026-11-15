@@ -4,6 +4,13 @@
 #include "Character/UnderwaterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "Engine/LocalPlayer.h"
+#include "GameFramework/PlayerController.h"
+#include "InputAction.h"
+#include "InputMappingContext.h"
+#include "InputModifiers.h"
+#include "Interaction/SliceInteractorComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
 #include "Survival/SurvivalVitalsComponent.h"
@@ -37,6 +44,8 @@ AUnderwaterCharacter::AUnderwaterCharacter(const FObjectInitializer& ObjectIniti
 	ThirdPersonCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ThirdPersonCamera"));
 	ThirdPersonCamera->SetupAttachment(ThirdPersonBoom, USpringArmComponent::SocketName);
 	ThirdPersonCamera->SetAutoActivate(false);
+
+	Interactor = CreateDefaultSubobject<USliceInteractorComponent>(TEXT("Interactor"));
 }
 
 void AUnderwaterCharacter::BeginPlay()
@@ -136,6 +145,7 @@ void AUnderwaterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	{
 		return;
 	}
+	EnsureDefaultInput();
 	if (MoveAction)
 	{
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AUnderwaterCharacter::OnMove);
@@ -152,7 +162,114 @@ void AUnderwaterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	{
 		EIC->BindAction(ToggleCameraAction, ETriggerEvent::Started, this, &AUnderwaterCharacter::OnToggleCamera);
 	}
+	if (InteractAction)
+	{
+		EIC->BindAction(InteractAction, ETriggerEvent::Started, this, &AUnderwaterCharacter::OnInteractStarted);
+		EIC->BindAction(InteractAction, ETriggerEvent::Completed, this, &AUnderwaterCharacter::OnInteractCompleted);
+		EIC->BindAction(InteractAction, ETriggerEvent::Canceled, this, &AUnderwaterCharacter::OnInteractCompleted);
+	}
+	if (WatchAction)
+	{
+		EIC->BindAction(WatchAction, ETriggerEvent::Started, this, &AUnderwaterCharacter::OnWatchStarted);
+		EIC->BindAction(WatchAction, ETriggerEvent::Completed, this, &AUnderwaterCharacter::OnWatchCompleted);
+		EIC->BindAction(WatchAction, ETriggerEvent::Canceled, this, &AUnderwaterCharacter::OnWatchCompleted);
+	}
 }
+
+void AUnderwaterCharacter::EnsureDefaultInput()
+{
+	if (DefaultInputContext)
+	{
+		return;
+	}
+	DefaultInputContext = NewObject<UInputMappingContext>(this, TEXT("DefaultInputContext"));
+	UInputMappingContext* Context = DefaultInputContext;
+	// Returns the action to map, creating it only when the designer left the slot empty.
+	auto Default = [this](TObjectPtr<UInputAction>& Slot, const TCHAR* Name, EInputActionValueType Type) -> UInputAction*
+	{
+		if (Slot)
+		{
+			return nullptr;
+		}
+		Slot = NewObject<UInputAction>(this, Name);
+		Slot->ValueType = Type;
+		return Slot;
+	};
+	auto Map = [Context](UInputAction* Action, FKey Key, bool bSwizzle = false, FVector Negate = FVector::ZeroVector,
+						 float Scale = 1.0f)
+	{
+		if (!Action)
+		{
+			return;
+		}
+		FEnhancedActionKeyMapping& Mapping = Context->MapKey(Action, Key);
+		if (!Negate.IsZero())
+		{
+			UInputModifierNegate* Mod = NewObject<UInputModifierNegate>(Context);
+			Mod->bX = Negate.X != 0.0;
+			Mod->bY = Negate.Y != 0.0;
+			Mod->bZ = Negate.Z != 0.0;
+			Mapping.Modifiers.Add(Mod);
+		}
+		if (bSwizzle)
+		{
+			UInputModifierSwizzleAxis* Mod = NewObject<UInputModifierSwizzleAxis>(Context);
+			Mod->Order = EInputAxisSwizzle::YXZ;
+			Mapping.Modifiers.Add(Mod);
+		}
+		if (Scale != 1.0f)
+		{
+			UInputModifierScalar* Mod = NewObject<UInputModifierScalar>(Context);
+			Mod->Scalar = FVector(Scale);
+			Mapping.Modifiers.Add(Mod);
+		}
+	};
+	const FVector X(1, 0, 0), Y(0, 1, 0);
+	// Move: X is strafe right, Y is forward (see ApplyInput).
+	UInputAction* Move = Default(MoveAction, TEXT("IA_Default_Move"), EInputActionValueType::Axis2D);
+	Map(Move, EKeys::D);
+	Map(Move, EKeys::A, false, X);
+	Map(Move, EKeys::W, true);
+	Map(Move, EKeys::S, true, X);
+	Map(Move, EKeys::Gamepad_Left2D);
+	// Look: the legacy pitch scale is negative, so Y is flipped to make up mean up.
+	UInputAction* Look = Default(LookAction, TEXT("IA_Default_Look"), EInputActionValueType::Axis2D);
+	Map(Look, EKeys::Mouse2D, false, Y, 0.04f);
+	Map(Look, EKeys::Gamepad_Right2D, false, Y, 0.6f);
+	UInputAction* Ascend = Default(AscendAction, TEXT("IA_Default_Ascend"), EInputActionValueType::Axis1D);
+	Map(Ascend, EKeys::SpaceBar);
+	Map(Ascend, EKeys::LeftControl, false, X);
+	UInputAction* Toggle = Default(ToggleCameraAction, TEXT("IA_Default_ToggleCamera"), EInputActionValueType::Boolean);
+	Map(Toggle, EKeys::C);
+	Map(Toggle, EKeys::Gamepad_RightThumbstick);
+	UInputAction* Interact = Default(InteractAction, TEXT("IA_Default_Interact"), EInputActionValueType::Boolean);
+	Map(Interact, EKeys::E);
+	Map(Interact, EKeys::LeftMouseButton);
+	Map(Interact, EKeys::Gamepad_FaceButton_Bottom);
+	UInputAction* Watch = Default(WatchAction, TEXT("IA_Default_Watch"), EInputActionValueType::Boolean);
+	Map(Watch, EKeys::Q);
+	Map(Watch, EKeys::Gamepad_FaceButton_Top);
+}
+
+void AUnderwaterCharacter::PawnClientRestart()
+{
+	Super::PawnClientRestart();
+	const APlayerController* PC = Cast<APlayerController>(Controller);
+	const ULocalPlayer* LocalPlayer = PC ? PC->GetLocalPlayer() : nullptr;
+	UEnhancedInputLocalPlayerSubsystem* Subsystem =
+		LocalPlayer ? LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>() : nullptr;
+	if (Subsystem && DefaultInputContext && !Subsystem->HasMappingContext(DefaultInputContext))
+	{
+		Subsystem->AddMappingContext(DefaultInputContext, 0);
+		UE_LOG(LogTemp, Log, TEXT("UnderwaterCharacter: default input context added with %d key mappings"),
+			   DefaultInputContext->GetMappings().Num());
+	}
+}
+
+void AUnderwaterCharacter::OnInteractStarted() { Interactor->SetInputHeld(ESliceInput::Interact, true); }
+void AUnderwaterCharacter::OnInteractCompleted() { Interactor->SetInputHeld(ESliceInput::Interact, false); }
+void AUnderwaterCharacter::OnWatchStarted() { Interactor->SetInputHeld(ESliceInput::Watch, true); }
+void AUnderwaterCharacter::OnWatchCompleted() { Interactor->SetInputHeld(ESliceInput::Watch, false); }
 
 void AUnderwaterCharacter::OnMove(const FInputActionValue& Value) { Enqueue(Value.Get<FVector2D>(), FVector2D::ZeroVector, 0.0f); }
 void AUnderwaterCharacter::OnLook(const FInputActionValue& Value) { Enqueue(FVector2D::ZeroVector, Value.Get<FVector2D>(), 0.0f); }

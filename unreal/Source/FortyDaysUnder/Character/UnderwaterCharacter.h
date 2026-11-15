@@ -9,6 +9,8 @@ class UCameraComponent;
 class USpringArmComponent;
 class USurvivalVitalsComponent;
 class UInputAction;
+class UInputMappingContext;
+class USliceInteractorComponent;
 struct FInputActionValue;
 
 UCLASS()
@@ -28,6 +30,11 @@ public:
 	UPROPERTY(EditAnywhere, Category="Input") TObjectPtr<UInputAction> LookAction;
 	UPROPERTY(EditAnywhere, Category="Input") TObjectPtr<UInputAction> AscendAction;
 	UPROPERTY(EditAnywhere, Category="Input") TObjectPtr<UInputAction> ToggleCameraAction;
+	UPROPERTY(EditAnywhere, Category="Input") TObjectPtr<UInputAction> InteractAction;
+	UPROPERTY(EditAnywhere, Category="Input") TObjectPtr<UInputAction> WatchAction;
+
+	/** Opening-slice interactions: view trace plus Interact / Watch input. */
+	UPROPERTY(VisibleAnywhere) TObjectPtr<USliceInteractorComponent> Interactor;
 
 	UFUNCTION(BlueprintCallable) void SetCameraBlend(float Alpha);     // 0 first person, 1 third person
 	UFUNCTION(BlueprintCallable) float GetInputLatencySeconds() const; // 0.25 x DcsSeverity
@@ -47,6 +54,7 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	virtual void PawnClientRestart() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -64,6 +72,14 @@ private:
 	void OnLook(const FInputActionValue& Value);
 	void OnAscend(const FInputActionValue& Value);
 	void OnToggleCamera();
+	void OnInteractStarted();
+	void OnInteractCompleted();
+	void OnWatchStarted();
+	void OnWatchCompleted();
+	/** Any action left unassigned gets a code-built default with keyboard, mouse and gamepad keys. */
+	void EnsureDefaultInput();
+
+	UPROPERTY(Transient) TObjectPtr<UInputMappingContext> DefaultInputContext;
 	void Enqueue(const FVector2D& Move, const FVector2D& Look, float Ascend);
 	void ApplyInput(const FDelayedInput& Input);
 
